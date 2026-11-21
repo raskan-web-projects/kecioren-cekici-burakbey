@@ -1,0 +1,26 @@
+{
+  "name": "kecioren-cekici-burakbey",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && vite build --config vite.ssr.config.ts && node scripts/prerender.mjs",
+    "preview": "wrangler pages dev dist",
+    "test": "node --test",
+    "deploy": "wrangler pages deploy dist --project-name=kecioren-cekici-burakbey --branch=main",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "6.3.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "vite": "8.3.8"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "5.8.3",
+    "wrangler": "4.166.0"
+  }
+}
