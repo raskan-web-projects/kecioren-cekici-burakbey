@@ -7,28 +7,6 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return <span aria-hidden="true" className="arrow">{diagonal ? '↗' : '→'}</span>;
 }
 
-function TruckIllustration() {
-  return <svg className="truck-art" viewBox="0 0 720 470" role="img" aria-label="Sarı çekici aracı çizimi">
-    <defs><linearGradient id="cab" x1="0" x2="1"><stop stopColor="#ffd43b"/><stop offset="1" stopColor="#f4a900"/></linearGradient></defs>
-    <path d="M72 360h558" stroke="#62625a" strokeWidth="2" strokeDasharray="8 10" />
-    <path d="M125 306h332l96 40v29H125z" fill="#292a25" stroke="#77776d" strokeWidth="3" />
-    <path d="M400 185h106l74 95v66H405z" fill="url(#cab)" />
-    <path d="M429 204h67l55 66H430z" fill="#1b2528" />
-    <path d="M466 210v54m-32-2h91" stroke="#838c88" strokeWidth="3" />
-    <path d="M112 283h286v25H112z" fill="#f5c32f" />
-    <path d="M146 280 297 188h99l-150 94z" fill="#d5d5cd" stroke="#98988f" strokeWidth="3" />
-    <path d="M145 287 288 198" stroke="#f9f7eb" strokeWidth="5" />
-    <path d="M287 198h96" stroke="#f9f7eb" strokeWidth="5" />
-    <path d="M152 312h261" stroke="#f4b900" strokeWidth="5" />
-    <circle cx="218" cy="359" r="32" fill="#10110f" stroke="#77776d" strokeWidth="7" />
-    <circle cx="218" cy="359" r="11" fill="#f5c32f" />
-    <circle cx="510" cy="359" r="32" fill="#10110f" stroke="#77776d" strokeWidth="7" />
-    <circle cx="510" cy="359" r="11" fill="#f5c32f" />
-    <path d="M51 392h601" stroke="#f5c32f" strokeWidth="2" opacity=".45" />
-    <text x="123" y="256" fill="#f5c32f" fontSize="13" fontFamily="monospace" letterSpacing="3">KEÇİÖREN · ANKARA</text>
-  </svg>;
-}
-
 function LanguageSwitch() {
   if (languages.length < 2) return null;
   return <button className="language-switch" type="button" aria-label="Dil seç">◎</button>;
@@ -73,7 +51,15 @@ export function App() {
           <div className="hero-actions"><a className="button button-yellow" href={`tel:${site.phone}`} data-event="click_phone" data-location="hero">{tr.hero.call} <Arrow diagonal /></a><a className="button button-outline" href={`https://wa.me/${site.whatsapp}?text=${encodeURIComponent(tr.whatsappMessage)}`} target="_blank" rel="noreferrer" data-event="click_whatsapp" data-location="hero">{tr.hero.whatsapp} <Arrow diagonal /></a></div>
           <div className="hero-phone"><span>{tr.hero.phoneLabel}</span><a href={`tel:${site.phone}`} data-event="click_phone" data-location="hero-number">{site.phoneDisplay}</a></div>
         </div>
-        <div className="hero-visual"><div className="visual-grid"/><div className="visual-index">BK—01<br />ROAD ASSIST</div><TruckIllustration/><div className="visual-note"><span>ANKARA / TR</span><b>{tr.hero.visualLabel}</b></div></div>
+        <aside className="hero-visual" aria-label="Çekici ve yol yardım hizmetleri">
+          <div className="visual-top"><span>HİZMETLERİMİZ</span><span>KEÇİÖREN · ANKARA</span></div>
+          <h2>Yolda kaldığınızda<br /><em>yanınızdayız.</em></h2>
+          <p>Aracınıza uygun destek için Burak Bey’e ulaşın.</p>
+          <div className="hero-service-links">
+            {tr.services.slice(0, 4).map((service) => <a href={`#${service.id}`} key={service.id}>{service.title}<Arrow diagonal /></a>)}
+          </div>
+          <div className="visual-bottom"><span>DOĞRUDAN İLETİŞİM</span><a href={`tel:${site.phone}`} data-event="click_phone" data-location="hero-panel">{site.phoneDisplay}<Arrow diagonal /></a></div>
+        </aside>
         <div className="hero-bottom"><span>{tr.hero.bottom}</span><a href="#hizmetler">{tr.hero.discover} <Arrow /></a></div>
       </section>
 
