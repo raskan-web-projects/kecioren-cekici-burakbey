@@ -43,33 +43,41 @@ export function App() {
     </header>
 
     <main id="top">
-      <section className="hero wrap">
-        <div className="hero-copy">
-          <p className="eyebrow"><i /> {tr.hero.eyebrow} <span>·</span> {tr.hero.category}</p>
-          <h1>{tr.hero.title}<br /><em>{tr.hero.titleAccent}</em></h1>
-          <p className="hero-lede">{tr.hero.description}</p>
-          <div className="hero-actions"><a className="button button-yellow" href={`tel:${site.phone}`} data-event="click_phone" data-location="hero">{tr.hero.call} <Arrow diagonal /></a><a className="button button-outline" href={`https://wa.me/${site.whatsapp}?text=${encodeURIComponent(tr.whatsappMessage)}`} target="_blank" rel="noreferrer" data-event="click_whatsapp" data-location="hero">{tr.hero.whatsapp} <Arrow diagonal /></a></div>
-          <div className="hero-phone"><span>{tr.hero.phoneLabel}</span><a href={`tel:${site.phone}`} data-event="click_phone" data-location="hero-number">{site.phoneDisplay}</a></div>
-        </div>
-        <aside className="hero-visual" aria-label="Çekici ve yol yardım hizmetleri">
-          <div className="visual-top"><span>HİZMETLERİMİZ</span><span>KEÇİÖREN · ANKARA</span></div>
-          <h2>Yolda kaldığınızda<br /><em>yanınızdayız.</em></h2>
-          <p>Aracınıza uygun destek için Burak Bey’e ulaşın.</p>
-          <div className="hero-service-links">
-            {tr.services.slice(0, 4).map((service) => <a href={`#${service.id}`} key={service.id}>{service.title}<Arrow diagonal /></a>)}
+      <section className="hero-stage" aria-labelledby="hero-title">
+        <img className="hero-photo" src="/images/hero-tow.webp" alt="Otoyolda aracı taşıyan çekici" fetchPriority="high" />
+        <div className="hero-shade" />
+        <div className="hero-inner wrap">
+          <div className="hero-copy">
+            <p className="eyebrow"><i /> {tr.hero.eyebrow} <span>·</span> {tr.hero.category}</p>
+            <h1 id="hero-title">{tr.hero.title}<br /><em>{tr.hero.titleAccent}</em></h1>
+            <p className="hero-lede">{tr.hero.description}</p>
+            <div className="hero-actions"><a className="button button-yellow" href={`tel:${site.phone}`} data-event="click_phone" data-location="hero">{tr.hero.call} <Arrow diagonal /></a><a className="button button-outline" href={`https://wa.me/${site.whatsapp}?text=${encodeURIComponent(tr.whatsappMessage)}`} target="_blank" rel="noreferrer" data-event="click_whatsapp" data-location="hero">{tr.hero.whatsapp} <Arrow diagonal /></a></div>
+            <div className="hero-location"><span className="location-pin" aria-hidden="true">⌖</span><span>KEÇİÖREN, ANKARA</span><span className="location-rule"/><span>OTO KURTARMA · YOL YARDIM</span></div>
           </div>
-          <div className="visual-bottom"><span>DOĞRUDAN İLETİŞİM</span><a href={`tel:${site.phone}`} data-event="click_phone" data-location="hero-panel">{site.phoneDisplay}<Arrow diagonal /></a></div>
-        </aside>
-        <div className="hero-bottom"><span>{tr.hero.bottom}</span><a href="#hizmetler">{tr.hero.discover} <Arrow /></a></div>
+          <aside className="hero-call-card">
+            <span className="call-card-kicker">DOĞRUDAN ULAŞIN</span>
+            <span className="call-card-label">Burak Bey</span>
+            <a className="call-card-phone" href={`tel:${site.phone}`} data-event="click_phone" data-location="hero-card">{site.phoneDisplay}<Arrow diagonal /></a>
+            <span className="call-card-divider" />
+            <a className="call-card-direction" href={site.maps} target="_blank" rel="noreferrer" data-event="click_directions" data-location="hero-card">Konumu aç <Arrow diagonal /></a>
+          </aside>
+        </div>
+        <a className="hero-scroll" href="#hizmetler"><span>HİZMETLERE GÖZ AT</span><b aria-hidden="true">↓</b></a>
       </section>
 
       <section className="service-section" id="hizmetler"><div className="wrap">
         <div className="section-heading"><div><p className="eyebrow">{tr.serviceHeading.eyebrow}</p><h2>{tr.serviceHeading.title}<br /><em>{tr.serviceHeading.accent}</em></h2></div><p>{tr.serviceHeading.text}</p></div>
+        <div className="service-feature-grid">
+          <a className="service-feature service-feature-tow" href="#oto-kurtarma"><img src="/images/flatbed-car.webp" alt="Aracın platformlu çekiciyle taşınması" loading="lazy"/><span className="feature-shade"/><span className="feature-index">01 / TAŞIMA</span><span className="feature-title">Çekici<br />hizmetleri</span><span className="feature-link">Hizmeti incele <Arrow diagonal /></span></a>
+          <a className="service-feature service-feature-road" href="#yol-yardim"><img src="/images/night-road.webp" alt="Gece ışıkları altında şehir yolu" loading="lazy"/><span className="feature-shade"/><span className="feature-index">02 / YOLDA DESTEK</span><span className="feature-title">Yol yardım<br />ve destek</span><span className="feature-link">Hizmeti incele <Arrow diagonal /></span></a>
+          <a className="service-feature service-feature-wheel" href="#aku-takviyesi"><img src="/images/battery-assist.webp" alt="Araç aküsü ve bağlantı kabloları" loading="lazy"/><span className="feature-shade"/><span className="feature-index">03 / AKÜ DESTEĞİ</span><span className="feature-title">Akü takviyesi<br />ve yardım</span><span className="feature-link">Hizmeti incele <Arrow diagonal /></span></a>
+        </div>
+        <p className="image-note">Fotoğraflar temsili görsellerdir.</p>
         <div className="service-list">{tr.services.map((service) => <article className="service-row" id={service.id} key={service.id}><span className="service-number">{service.number}</span><h3>{service.title}</h3><p>{service.text}</p><a href={`tel:${site.phone}`} aria-label={`${service.title} için Burak Bey'i ara`} data-event="click_phone" data-location={`service-${service.id}`}><Arrow diagonal /></a></article>)}</div>
         <div className="section-cta"><p>{tr.serviceHeading.closing}</p><a href={`tel:${site.phone}`} data-event="click_phone" data-location="services-bottom">{site.phoneDisplay} <Arrow diagonal /></a></div>
       </div></section>
 
-      <section className="process-section wrap" id="surec"><div className="process-title"><p className="eyebrow">{tr.process.eyebrow}</p><h2>{tr.process.title}<br /><em>{tr.process.accent}</em></h2><p>{tr.process.text}</p></div><div className="steps">{tr.process.steps.map(([title, text], i) => <article key={title}><b>0{i + 1}</b><div><h3>{title}</h3><p>{text}</p></div></article>)}<a className="text-link" href={`tel:${site.phone}`} data-event="click_phone" data-location="process">{tr.process.call} <Arrow diagonal /></a></div></section>
+      <section className="process-section wrap" id="surec"><div className="process-title"><p className="eyebrow">{tr.process.eyebrow}</p><h2>{tr.process.title}<br /><em>{tr.process.accent}</em></h2><p>{tr.process.text}</p><figure className="process-photo"><img src="/images/wheel-service.webp" alt="Araç tekerinde işlem yapan teknisyen" loading="lazy"/><figcaption>İhtiyacınızı anlatın, uygun desteği birlikte planlayalım.</figcaption></figure></div><div className="steps">{tr.process.steps.map(([title, text], i) => <article key={title}><b>0{i + 1}</b><div><h3>{title}</h3><p>{text}</p></div></article>)}<a className="text-link" href={`tel:${site.phone}`} data-event="click_phone" data-location="process">{tr.process.call} <Arrow diagonal /></a></div></section>
 
       <section className="contact-band"><div className="wrap contact-inner"><div><p className="eyebrow">{tr.contact.eyebrow}</p><h2>{tr.contact.title}<br /><em>{tr.contact.accent}</em></h2><p>{tr.contact.text}</p></div><div className="contact-actions"><a className="button button-dark" href={`tel:${site.phone}`} data-event="click_phone" data-location="contact">{site.phoneDisplay} <Arrow diagonal /></a><a className="map-link" href={site.maps} target="_blank" rel="noreferrer" data-event="click_directions" data-location="contact">{tr.contact.directions} <Arrow diagonal /></a></div></div></section>
       <section className="faq-section wrap" id="sorular"><div><p className="eyebrow">{tr.faqHeading.eyebrow}</p><h2>{tr.faqHeading.title}<br /><em>{tr.faqHeading.accent}</em></h2></div><div className="faq-list">{tr.faq.map((item) => <details key={item.question}><summary>{item.question}</summary><p>{item.answer}</p></details>)}</div></section>
