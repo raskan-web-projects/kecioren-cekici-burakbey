@@ -48,7 +48,7 @@ Kısa, yerel işlem niyetli tek sayfa seçildi: ana başlıkta Keçiören + oto 
 - Geçici `pages.dev` yayını `noindex` ile işaretlenir. Özel domain bağlandığında bu koruma ve canonical/sitemap/OG adresi güncellenmelidir.
 - Google Analytics ID henüz verilmedi; boş durumda gtag isteği yapılmaz. ID verilirse ölçüm banner'ı ve varsayılan reddedilmiş Consent Mode ile yalnızca izin sonrası yüklenir. `click_phone`, `click_whatsapp`, `click_directions`, `click_sticky_cta`, `generate_lead` olayları hazırdır.
 - `robots.txt` yaygın OpenAI, Anthropic, Perplexity, Google ve Apple botlarına izin verir. Google-Extended, Google'ın resmî crawler dokümanında Gemini/Vertex AI kullanımı için robots.txt tokenı olarak belgelenmiştir: [Google crawler docs](https://developers.google.com/crawling/docs/crawlers-fetchers/google-common-crawlers). Cloudflare AI Crawl Control canlı projede ayrıca doğrulanmalı.
-- Bing/IndexNow anahtarı henüz oluşturulmadı; site yayımlandıktan sonra anahtar dosyası ve URL bildirimi tamamlanmalı.
+- IndexNow doğrulama anahtarı `public/40a435a7bf1915eb2e6e80534cdd422f.txt` olarak hazır. Geçici `pages.dev` adresi noindex olduğundan Bing bildirimi özel domain bağlanıp indekslemeye açıldıktan sonra yapılmalı.
 
 ## Launch günü GEO başlangıç fotoğrafı
 

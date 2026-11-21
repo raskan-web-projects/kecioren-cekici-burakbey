@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 
 test('homepage is prerendered with its core local SEO and contact details', async () => {
   const html = await readFile('dist/index.html', 'utf8');
@@ -34,4 +34,10 @@ test('search metadata and Pages crawler directives stay consistent', async () =>
   assert.match(robots, /User-agent: OAI-SearchBot/);
   assert.match(robots, /Sitemap: https:\/\/kecioren-cekici-burakbey\.pages\.dev\/sitemap\.xml/);
   assert.match(sitemap, /<loc>https:\/\/kecioren-cekici-burakbey\.pages\.dev\//);
+});
+
+test('IndexNow key file matches its public key name', async () => {
+  const files = (await readdir('dist')).filter((name) => /^[a-f0-9]{32}\.txt$/.test(name));
+  assert.equal(files.length, 1);
+  assert.equal((await readFile(`dist/${files[0]}`, 'utf8')).trim(), files[0].slice(0, -4));
 });
