@@ -1,6 +1,6 @@
 # Keçiören Çekici Burak Bey — SEO/GEO araştırması
 
-**Araştırma tarihi:** 21 Kasım 2026 · **Pazar:** Türkiye · **Dil:** Türkçe
+**Araştırma dönemi:** 21–22 Kasım 2026 · **Pazar:** Türkiye · **Dil:** Türkçe
 **İşletme özeti:** Kullanıcı tarafından verilen işletme adı Keçiören Çekici Burak Bey; hizmet alanı Keçiören, Ankara; telefon ve WhatsApp 0539 730 16 47. Kullanıcı harita bağlantısı verdi. E-posta, çalışma saati, fiyat, fiziksel adres ve sosyal profil sağlanmadı. İşletme dizinindeki aynı telefon kaydı ad eşleşmesini destekliyor; dizinde görünen adres ayrıca işletme sahibi tarafından doğrulanmadığından siteye taşınmadı.
 
 ## Araştırma yöntemi ve sınırlar
@@ -61,3 +61,61 @@ Web araması `"Keçiören'de en iyi çekici"`, `"Keçiören motosiklet çekici �
 3. Google Search Console ve Bing Webmaster Tools mülklerini ekleyip sitemap gönder; IndexNow anahtarı oluştur ve yeni URL'yi bildir.
 4. Google Business Profile'daki ad/telefon/adres/saatleri işletme sahibiyle eşleştir; hatalı/eski rehber adreslerini düzelt.
 5. Gerçek çalışma saatleri, hizmet bölgeleri, e-posta, işletme fotoğrafı ve GA4 ID hazır olduğunda site bilgilerini güncelle.
+
+## 22 Kasım OpenSEO ve canlı arama takibi
+
+### Kaynak ve OpenSEO uygulama kaydı
+
+- OpenSEO deposu 22.11.2026 tarihinde sığ klonlandı; incelenen commit: `af3f995fe3ebbe21298df152465a5436842354ee`.
+- Okunan dosyalar: depo `AGENTS.md`, `README.md`, setup kurulumu ve `plugins/openseo/skills/` içindeki `seo-project-setup`, `seo-audit`, `keyword-research`, `keyword-clustering`, `competitor-analysis`, `local-seo`, `ai-visibility-audit` becerileri.
+- Kurulum yönergesindeki proje/kimlik kontrolleri uygulandı. OpenSEO projesi: `56361b20-154e-436c-9a42-3c7634a80f1d`, geçici alan `kecioren-cekici-burakbey.pages.dev`. Search Console bağlantısı yok; mülk performans verisi okunamadı.
+- Web sitesi taraması: audit `f28048bd-fb7e-496c-b0ab-591e534bbf55`, 22.11.2026, tamamlandı; başlangıç adresi `https://kecioren-cekici-burakbey.pages.dev/`, 1/1 sayfa tarandı. Lighthouse bu taramada çalıştırılmadı.
+
+### İşletme ve yerel sonuç gözlemleri
+
+Telefonla eşleşen işletme profili `KEÇİÖREN ÇEKİCİ BURAK BEY OTO KURTARMA` adını ve `Çekici Hizmeti` kategorisini gösteriyor. Profil kontrolü 22.11.2026 tarihli: 5/5 puan ve 58 yorum; profil adresi `Pınarbaşı, Atlas Sk. No: 17/6, 06280 Keçiören/Ankara`; saatler her gün 00:00–24:00; 242 fotoğraf. Bu, OpenSEO profil verisidir; işletme sahibiyle ikinci bir doğrulama yapılmadığından sokak adresi ve saatler siteye eklenmedi. Profil açıklamasındaki 2016 kuruluş yılı, dört araç ve Ankara geneli hizmet gibi ifadeler de doğrulanmadı ve kullanılmadı. Google Maps'te genel `çekici` sorgusunda işletme bu tek kontrolde ilk yerel sonuç olarak gözlendi. Bu, ölçüm tarihi ve sorgu bağlamıyla sınırlı bir anlık gözlemdir; farklı kullanıcı/konumlarda sıra garantisi değildir.
+
+| Arama sorgusu (TR, 22.11.2026) | Canlı organik sonuç gözlemi | Niyet ve sayfa kararı |
+|---|---|---|
+| `Keçiören çekici` | İlk 20 organik sonuçta pages.dev sitesi görünmedi; rehberler, sosyal profiller ve yerel çekici sayfaları öne çıktı. | Yerel işlem: ana sayfada Keçiören, oto kurtarma, doğrudan arama/WhatsApp. |
+| `Keçiören oto kurtarma` | İlk 20'de pages.dev görünmedi; rehber ve yerel hizmet sayfaları vardı. | Yerel işlem: cevap odaklı oto kurtarma hizmet alanı. |
+| `Keçiören yol yardım` | İlk 20'de pages.dev görünmedi; rehber ve rakip hizmet sayfaları vardı. | Yerel işlem: ayrı H2 ve yardım/çekici ayrımını açıklayan metin. |
+| `Keçiören akü takviyesi` | İlk 20'de pages.dev görünmedi; dar yerel kapsamlı sonuç sayısı daha sınırlıydı. | Yerel işlem: akü başlığı ve net fiyat için telefon CTA'sı; fiyat uydurma yok. |
+| `Keçiören motosiklet çekici` | İlk 20'de pages.dev görünmedi; hizmet rehberleri ve motosiklet taşıma sayfaları vardı. | Yerel işlem: motosiklet başlığını belirgin tut; ayrı URL açmak için mevcut kanıt yetersiz. |
+
+Sonuçlar Türkiye/Türkçe hedefli OpenSEO canlı Google SERP kontrolleridir. Araç bu kontrollerde ilk 20'yi verdi; ilk 10'un cihaz/kişiselleştirme kırılımı ve yerel paketin SERP dışı koşulları kayıtlı değil. Bu tabloda sıralama nedeni çıkarımı yapılmıyor. Rakip örnekleri arasında [Agah Yol Yardım](https://www.agahyolyardim.com/sabit-kasa-cekici), [Ankara Ahtapot Çekici](https://ankaraahtapotcekici.net/), [Dağ Oto Kurtarma](https://otokurtarmadag.com/) ve [24destek Keçiören](https://www.24destek.com/ankara/kecioren/cekici) sayfaları içerik karşılaştırması için incelendi. İlk üçünde ekipman/hizmet ve iletişim ayrımları, 24destek'te çok işletmeli rehber kurgusu görülüyor; içerik veya performans iddiaları bu işletmeye aktarılmadı.
+
+### Anahtar kelime kısa listesi ve karar
+
+| Sorgu kümesi | Yaklaşık aylık arama (Ankara/TR, OpenSEO sağlayıcı tahmini) | Niyet | Karar |
+|---|---:|---|---|
+| `Keçiören çekici` | 390 | Yerel işlem | Ana başlık ve title için öncelikli. |
+| `Keçiören oto kurtarma` | 140 | Yerel işlem | Ana sayfa H1/ilk metin ve hizmet bölümü. |
+| `Keçiören yol yardım` | 10 | Yerel işlem | Aynı sayfada belirgin hizmet açıklaması; küçük tahmin nedeniyle dışlama yok. |
+| `Ankara çekici` | 1.300 | Yerel işlem/kıyas | Daha geniş kapsam; sayfada yalnız kullanıcının gerçek hizmet alanı doğrulanırsa hedeflenir. Şu an Keçiören odağı korunuyor. |
+| `oto çekici` | 880 | Yerel işlem | Genel terim; yerel bağlam ve çekici hizmet satırlarında doğal kullanılır. |
+| `çekici fiyatları` | 720 | Fiyat/kıyas | İşletmeye ait tarife yok. SSS'de ücretin rota/araç/taşıma biçimine göre görüşüleceği söylenir. |
+| `çekici ücretleri` | 110 | Fiyat/kıyas | Ayrı fiyat sayfası için özgün ve doğrulanmış fiyat verisi yok; SSS ile karşılanır. |
+| `Keçiören akü takviyesi`, `Keçiören motosiklet çekici` | Metrik dönmedi | Yerel işlem | SERP'te hizmet sonuçları görülüyor; başlıklar mevcut. Hacim uydurulmaz. |
+
+Hacimler OpenSEO sağlayıcısının ülke Türkiye, dil Türkçe, yer Ankara için aylık tahminleridir; Search Console gerçek gösterim/tıklaması değildir. Ana mimari tek URL olarak kalır: SERP kanıtı hizmet veya mahalle başına içerikçe bağımsız bir sayfayı doğrulamıyor; kopya lokasyon sayfaları doorway riski doğurur.
+
+### Tasarım uygulama planı
+
+Kodlamadan önce hazırlanan görünür storyboard ve kabul ölçütleri [DESIGN-PLAN.md](./DESIGN-PLAN.md) içindedir. Özgün teknik çekici illüstrasyonu, hero/CTA düzeni, mobil gezinme, yatay hizmet panelleri, süreç, FAQ ve harita kapanışı bu plana göre uygulanacaktır. Gerçek işletme fotoğrafı olmadığı için stok fotoğraflar sayfada işletmeye aitmiş izlenimi vermeyecek; özgün SVG sahnesi de illüstrasyon olarak tanımlanacaktır.
+
+### OpenSEO tarama bulguları
+
+| URL | HTTP | Başlık / açıklama | H1 | Kelime | Index | Schema/alt | Link/sitemap |
+|---|---:|---|---:|---:|---|---|---|
+| `https://kecioren-cekici-burakbey.pages.dev/` | 200 | Var / var | 1 | 486 | Hayır (bilerek `X-Robots-Tag: noindex`) | Tarayıcı 6 görsel ve eksik alt yok bildirdi | 0 ayrı iç URL bağlantısı / sitemap'te var |
+
+Tarayıcı tek uyarı verdi: `noindex-page`, `xRobotsTag: noindex`. Bu geçici Pages hostu için amaçlıdır ve üretim header'ında korunmalıdır; indexlenmesi beklenen özel domainin `SITE_URL` ve header kuralı bağlanınca ayrıca güncellenecektir. Tarayıcı görünür başlık olarak `Keçiören Çekici Burak Bey | Oto Kurtarma ve Yol Yardım`, açıklama olarak mevcut yerel hizmet özetini okudu. Tarama süresi 14 ms kaydedildi; tek URL/sınırlı örnek olduğundan hız veya Lighthouse puanı olarak genellenemez.
+
+### GEO başlangıç ölçümünün sınırları
+
+Önceki web araması başlangıç notları şu dört doğal dil sorusunu kapsıyor: “Keçiören'de en iyi çekici”, “Keçiören motosiklet çekici önerisi”, “Keçiören akü takviyesi için kimi aramalıyım” ve “Ankara şehirler arası çekici önerisi”. Aynı telefonla eşleşen marka profili görülürken öneri sorularında dizinler/rakip sayfaları öne çıktı. Bu 4 gözlem, becerinin önerdiği 5–8 soruluk örneklemin altındadır; mevcut oturumda ücretsiz bağımsız web arama aracı bulunmadığı ve yanıt API denetimi ücretli olduğu için ek soru sonucu uydurulmadı. OpenSEO AI görünürlük tracker/yanıtları ve Search Console verisi yoktur. Bu başlangıç fotoğrafı ChatGPT, Claude, Gemini veya Perplexity API testi/sıralama vaadi değildir.
+
+### Teknik yayın öncesi kontrol kaydı
+
+Uygulama tamamlandıktan sonra bu bölüm URL başına derlenmiş `dist/` ham HTML kanıtı, title/description uzunluğu, canonical, `robots` ve `X-Robots-Tag`, hreflang, OG/Twitter, JSON-LD geçerliliği ve görünür eşleşmesi, sitemap/robots/llms/404, görsel boyut-alt metin ve CTA kontrolleriyle güncellenecektir. Geçici host için `noindex` amaçlı istisnadır. Lighthouse mobil ve gerçek masaüstü/mobil ekran görüntüsü yalnız erişilebilir araçla çalıştırılabildiği ölçüde raporlanacak; ölçülmemiş metrik uydurulmayacaktır.
