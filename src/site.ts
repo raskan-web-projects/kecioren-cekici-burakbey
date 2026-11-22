@@ -6,5 +6,6 @@ export const site = {
   whatsapp: '905397301647',
   city: 'Keçiören, Ankara',
   maps: 'https://maps.app.goo.gl/DiSzW37rddwQpg7u7',
+  mapEmbed: 'https://www.google.com/maps?q=40.0011964%2C32.8615497&output=embed',
   url: 'https://kecioren-cekici-burakbey.pages.dev'
 } as const;
