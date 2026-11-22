@@ -58,6 +58,7 @@ test('JSON-LD is valid and only describes visible, verified business details', (
   assert.equal(business.telephone, '+905397301647');
   assert.equal(business.areaServed.name, 'Keçiören, Ankara');
   assert.equal(business.hasMap, 'https://maps.app.goo.gl/DiSzW37rddwQpg7u7');
+  assert.equal(business.contactPoint.availableLanguage, 'Turkish');
   assert.equal(business.aggregateRating, undefined);
   assert.equal(business.address, undefined);
   assert.equal(faq.mainEntity.length, 4);

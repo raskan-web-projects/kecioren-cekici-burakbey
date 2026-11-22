@@ -78,7 +78,7 @@ export function App() {
         areaServed: { '@type': 'AdministrativeArea', name: 'Keçiören, Ankara' },
         hasMap: site.maps,
         sameAs: [site.maps],
-        availableLanguage: 'Turkish',
+        contactPoint: { '@type': 'ContactPoint', telephone: site.phone, contactType: 'customer service', availableLanguage: 'Turkish' },
         hasOfferCatalog: {
           '@type': 'OfferCatalog',
           name: 'Çekici ve yol yardım hizmetleri',
