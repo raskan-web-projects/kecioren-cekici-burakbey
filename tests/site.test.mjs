@@ -41,3 +41,11 @@ test('IndexNow key file matches its public key name', async () => {
   assert.equal(files.length, 1);
   assert.equal((await readFile(`dist/${files[0]}`, 'utf8')).trim(), files[0].slice(0, -4));
 });
+
+test('mobile contact menu is accessible and questions end with a call action', async () => {
+  const html = await readFile('dist/index.html', 'utf8');
+  assert.match(html, /aria-controls="sticky-options"/);
+  assert.match(html, /id="sticky-options"[^>]*aria-hidden="true"[^>]*inert=""/);
+  assert.match(html, /Sorunuz mu var\? Burak Bey’i arayın/);
+  assert.match(html, /data-location="faq"/);
+});
