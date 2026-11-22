@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { site } from './site';
 import { description, languages, pageTitle, tr } from './content/tr';
 import { analyticsConsent, setAnalyticsConsent, track } from './analytics';
@@ -14,6 +14,7 @@ function LanguageSwitch() {
 
 export function App() {
   const [open, setOpen] = useState(false);
+  const stickyRef = useRef<HTMLDivElement>(null);
   const [consentVisible, setConsentVisible] = useState(Boolean(import.meta.env.VITE_GA_ID) && !analyticsConsent());
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
@@ -25,6 +26,21 @@ export function App() {
     window.addEventListener('cta-sticky-open', openSticky);
     return () => { document.removeEventListener('click', handleClick); window.removeEventListener('cta-sticky-open', openSticky); };
   }, []);
+  useEffect(() => {
+    if (!open) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+    const closeOutside = (event: MouseEvent) => {
+      if (!stickyRef.current?.contains(event.target as Node)) setOpen(false);
+    };
+    document.addEventListener('keydown', closeOnEscape);
+    document.addEventListener('click', closeOutside);
+    return () => {
+      document.removeEventListener('keydown', closeOnEscape);
+      document.removeEventListener('click', closeOutside);
+    };
+  }, [open]);
   const structuredData = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -80,13 +96,13 @@ export function App() {
       <section className="process-section wrap" id="surec"><div className="process-title"><p className="eyebrow">{tr.process.eyebrow}</p><h2>{tr.process.title}<br /><em>{tr.process.accent}</em></h2><p>{tr.process.text}</p><figure className="process-photo"><img src="/images/wheel-service.webp" alt="Araç tekerinde işlem yapan teknisyen" loading="lazy"/><figcaption>İhtiyacınızı anlatın, uygun desteği birlikte planlayalım.</figcaption></figure></div><div className="steps">{tr.process.steps.map(([title, text], i) => <article key={title}><b>0{i + 1}</b><div><h3>{title}</h3><p>{text}</p></div></article>)}<a className="text-link" href={`tel:${site.phone}`} data-event="click_phone" data-location="process">{tr.process.call} <Arrow diagonal /></a></div></section>
 
       <section className="contact-band"><div className="wrap contact-inner"><div><p className="eyebrow">{tr.contact.eyebrow}</p><h2>{tr.contact.title}<br /><em>{tr.contact.accent}</em></h2><p>{tr.contact.text}</p></div><div className="contact-actions"><a className="button button-dark" href={`tel:${site.phone}`} data-event="click_phone" data-location="contact">{site.phoneDisplay} <Arrow diagonal /></a><a className="map-link" href={site.maps} target="_blank" rel="noreferrer" data-event="click_directions" data-location="contact">{tr.contact.directions} <Arrow diagonal /></a></div></div></section>
-      <section className="faq-section wrap" id="sorular"><div><p className="eyebrow">{tr.faqHeading.eyebrow}</p><h2>{tr.faqHeading.title}<br /><em>{tr.faqHeading.accent}</em></h2></div><div className="faq-list">{tr.faq.map((item) => <details key={item.question}><summary>{item.question}</summary><p>{item.answer}</p></details>)}</div></section>
+      <section className="faq-section wrap" id="sorular"><div><p className="eyebrow">{tr.faqHeading.eyebrow}</p><h2>{tr.faqHeading.title}<br /><em>{tr.faqHeading.accent}</em></h2></div><div className="faq-list">{tr.faq.map((item) => <details key={item.question}><summary>{item.question}</summary><p>{item.answer}</p></details>)}<a className="faq-cta" href={`tel:${site.phone}`} data-event="click_phone" data-location="faq">Sorunuz mu var? Burak Bey’i arayın <Arrow diagonal /></a></div></section>
     </main>
 
     <footer className="footer wrap"><a className="brand footer-brand" href="#top"><span className="brand-mark">B<span>↗</span></span><span className="brand-copy"><b>BURAK BEY</b><small>{tr.brand}</small></span></a><div className="footer-meta"><span>Keçiören, Ankara</span><a href={site.maps} target="_blank" rel="noreferrer" data-event="click_directions" data-location="footer">{tr.footer.directions} <Arrow diagonal /></a><a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noreferrer" data-event="click_whatsapp" data-location="footer">{tr.hero.whatsapp} <Arrow diagonal /></a><a href="#gizlilik">{tr.footer.privacy}</a></div><a className="raskan" href="https://raskanajans.com" target="_blank" rel="noopener noreferrer"><small>{tr.footer.madeBy}</small><img src="/raskan-logo.webp" alt="RASKAN" width="90" height="24" /></a><p className="copyright">© {new Date().getFullYear()} {site.name}</p></footer>
     <section className="privacy-note wrap" id="gizlilik"><h2>{tr.privacy.title}</h2><p>{tr.privacy.body}</p></section>
     {consentVisible && <aside className="consent-banner" aria-label={tr.consent.label}><p>{tr.consent.text}</p><button onClick={() => { setAnalyticsConsent('denied'); setConsentVisible(false); }}>{tr.consent.deny}</button><button onClick={() => { setAnalyticsConsent('granted'); setConsentVisible(false); }}>{tr.consent.allow}</button></aside>}
 
-    <div className="sticky-contact"><div className={`sticky-options ${open ? 'is-open' : ''}`} id="sticky-options" aria-hidden={!open}><a href={`tel:${site.phone}`} data-event="click_phone" data-location="sticky">{tr.sticky.call} <Arrow diagonal /></a><a href={`https://wa.me/${site.whatsapp}?text=${encodeURIComponent(tr.whatsappMessage)}`} target="_blank" rel="noreferrer" data-event="click_whatsapp" data-location="sticky">{tr.sticky.whatsapp} <Arrow diagonal /></a><a href={site.maps} target="_blank" rel="noreferrer" data-event="click_directions" data-location="sticky">{tr.sticky.directions} <Arrow diagonal /></a></div><button type="button" aria-expanded={open} aria-controls="sticky-options" onClick={() => { setOpen(!open); if (!open) window.dispatchEvent(new CustomEvent('cta-sticky-open')); }}>{tr.sticky.label} <span aria-hidden="true">{open ? '×' : '↗'}</span></button></div>
+    <div className="sticky-contact" ref={stickyRef}><div className={`sticky-options ${open ? 'is-open' : ''}`} id="sticky-options" aria-hidden={!open} inert={!open}><a href={`tel:${site.phone}`} tabIndex={open ? 0 : -1} data-event="click_phone" data-location="sticky">{tr.sticky.call} <Arrow diagonal /></a><a href={`https://wa.me/${site.whatsapp}?text=${encodeURIComponent(tr.whatsappMessage)}`} tabIndex={open ? 0 : -1} target="_blank" rel="noreferrer" data-event="click_whatsapp" data-location="sticky">{tr.sticky.whatsapp} <Arrow diagonal /></a><a href={site.maps} tabIndex={open ? 0 : -1} target="_blank" rel="noreferrer" data-event="click_directions" data-location="sticky">{tr.sticky.directions} <Arrow diagonal /></a></div><button type="button" aria-expanded={open} aria-controls="sticky-options" onClick={() => { setOpen(!open); if (!open) window.dispatchEvent(new CustomEvent('cta-sticky-open')); }}>{tr.sticky.label} <span aria-hidden="true">{open ? '×' : '↗'}</span></button></div>
   </>;
 }
