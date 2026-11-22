@@ -86,6 +86,10 @@ test('mobile navigation and sticky contact controls remain accessible in prerend
   assert.match(html, /data-location="faq"/);
 });
 
+test('analytics consent UI does not depend on browser storage during prerender', () => {
+  assert.doesNotMatch(html, /class="consent-banner"/);
+});
+
 test('IndexNow key matches its public key filename and 404 is noindex with a home link', async () => {
   const files = (await readdir('dist')).filter((name) => /^[a-f0-9]{32}\.txt$/.test(name));
   assert.equal(files.length, 1);

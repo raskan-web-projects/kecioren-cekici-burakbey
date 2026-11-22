@@ -17,8 +17,11 @@ export function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const stickyRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
-  const consentVisible = Boolean(import.meta.env.VITE_GA_ID) && !analyticsConsent();
-  const [showConsent, setShowConsent] = useState(consentVisible);
+  const [showConsent, setShowConsent] = useState(false);
+
+  useEffect(() => {
+    setShowConsent(Boolean(import.meta.env.VITE_GA_ID) && !analyticsConsent());
+  }, []);
 
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
