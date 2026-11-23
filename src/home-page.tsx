@@ -3,7 +3,11 @@ import { tr } from './content/tr';
 import { site } from './site';
 import { ContactActions, Icon, MapPanel, phoneHref, ServiceIcon } from './site-parts';
 
-const scenarios = [tr.services[0], tr.services[2], tr.services[4]];
+const scenarios = [
+  { service: tr.services[0], photo: 'flatbed-car.webp', alt: 'Platform çekicide taşınan bir otomobil', width: 900, height: 600 },
+  { service: tr.services[2], photo: 'battery-assist.webp', alt: 'Kabloları bağlı bir otomobil aküsünün yakın görünümü', width: 900, height: 600 },
+  { service: tr.services[4], photo: 'motorcycle-transport.webp', alt: 'Taşıma römorkuna kayışlarla sabitlenmiş bir motosiklet', width: 960, height: 637 }
+] as const;
 const highlights = [
   [tr.services[0], 'Arızalı araç taşıma'],
   [tr.services[1], 'Konuma göre destek'],
@@ -17,7 +21,12 @@ function ServiceShowcase() {
   const [selected, select] = useState(0);
   const startX = useRef<number | null>(null);
   const move = (step: number) => select((current) => (current + step + scenarios.length) % scenarios.length);
-  const service = scenarios[selected];
+  const { service } = scenarios[selected];
+  const photos = [
+    scenarios[(selected + scenarios.length - 1) % scenarios.length],
+    scenarios[selected],
+    scenarios[(selected + 1) % scenarios.length]
+  ];
 
   return <section className="showcase" aria-labelledby="showcase-title">
     <div className="wrap showcase-inner">
@@ -26,10 +35,13 @@ function ServiceShowcase() {
         if (startX.current !== null && Math.abs(event.clientX - startX.current) > 45) move(event.clientX < startX.current ? 1 : -1);
         startX.current = null;
       }}>
-        <div className="showcase-icons" aria-hidden="true">
-          <span><ServiceIcon id={scenarios[(selected + scenarios.length - 1) % scenarios.length].id} /></span>
-          <span className="showcase-active" key={service.id}><ServiceIcon id={service.id} /></span>
-          <span><ServiceIcon id={scenarios[(selected + 1) % scenarios.length].id} /></span>
+        <div className="showcase-photos">
+          {photos.map(({ service: item, photo, alt, width, height }, index) => {
+            const active = index === 1;
+            return <div key={item.id} className={active ? 'showcase-photo is-active' : 'showcase-photo'} aria-hidden={active ? undefined : true}>
+              <img src={'/images/' + photo} alt={active ? alt : ''} width={width} height={height} loading="lazy" decoding="async" draggable={false} />
+            </div>;
+          })}
         </div>
         <button className="showcase-prev" aria-label="Önceki hizmet" type="button" onClick={() => move(-1)}>‹</button>
         <button className="showcase-next" aria-label="Sonraki hizmet" type="button" onClick={() => move(1)}>›</button>
@@ -39,8 +51,13 @@ function ServiceShowcase() {
         <a className="text-link" href={'/hizmetler/#' + service.id}>Hizmeti incele <Icon name="arrow" /></a>
       </div>
       <div className="showcase-controls" role="group" aria-label="Vitrindeki hizmetler">
-        {scenarios.map((item, index) => <button key={item.id} type="button" onClick={() => select(index)} aria-pressed={index === selected}>{item.title}</button>)}
+        {scenarios.map(({ service: item }, index) => <button key={item.id} type="button" onClick={() => select(index)} aria-pressed={index === selected}>{item.title}</button>)}
       </div>
+      <details className="photo-credit">
+        <summary>Temsili fotoğrafların kaynakları</summary>
+        <p>Çekici: <a href="https://unsplash.com/photos/HZ_6ktzQWZ0">fr0ggy5</a>. Oto kurtarma: <a href="https://unsplash.com/photos/iJGax56o5yU">Ali Ananta</a>. Akü: <a href="https://unsplash.com/photos/E4Oz0TZUDe8">Wesley Tingey</a>. Bu üç fotoğraf <a href="https://unsplash.com/license">Unsplash Lisansı</a> kapsamında kullanılmıştır.</p>
+        <p>Motosiklet taşıma: <a href="https://commons.wikimedia.org/wiki/File:Open_motorcycle_trailer_with_motorcycle.jpg">Jeffrey M Dean, Wikimedia Commons</a>. WebP sürümü <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a> lisansıyla sunulur.</p>
+      </details>
     </div>
   </section>;
 }
@@ -56,7 +73,9 @@ export function HomePage() {
           <ContactActions location="hero" />
         </div>
         <div className="hero-visual">
-          <div className="hero-art" aria-hidden="true"><div className="signal"><span className="signal-head" /><span className="signal-base" /></div></div>
+          <div className="hero-art">
+            <img src="/images/hero-tow.webp" srcSet="/images/hero-tow-mobile.webp 900w, /images/hero-tow.webp 2000w" sizes="(max-width: 760px) 100vw, 54vw" alt="Yolda otomobil taşıyan platform çekici" width="2000" height="1145" fetchPriority="high" />
+          </div>
           <a className="hero-call-card" href={phoneHref} data-event="click_phone" data-location="hero-card">
             <span className="call-icon"><Icon name="phone" /></span>
             <span><small>Burak Bey’i ara</small><strong>{site.phoneDisplay}</strong></span><Icon name="arrow" />

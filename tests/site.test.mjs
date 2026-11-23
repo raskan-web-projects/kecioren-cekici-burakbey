@@ -102,3 +102,18 @@ test('discovery files, preview noindex, 404 and social image are consistent', as
   assert.equal(files.length, 1);
   assert.equal((await readFile('dist/' + files[0], 'utf8')).trim(), files[0].slice(0, -4));
 });
+
+test('home serves a prioritized responsive towing photo and three locally hosted service photos', async () => {
+  const html = pages.get('/');
+  assert.match(html, /<img[^>]+alt="Yolda otomobil taşıyan platform çekici"[^>]+fetchPriority="high"/i);
+  assert.match(html, /\/images\/hero-tow-mobile\.webp 900w, \/images\/hero-tow\.webp 2000w/);
+  for (const file of ['flatbed-car', 'battery-assist', 'motorcycle-transport']) {
+    assert.match(html, new RegExp('<img[^>]+src="/images/' + file + '\\.webp"[^>]+loading="lazy"'));
+  }
+  for (const file of ['hero-tow', 'hero-tow-mobile', 'flatbed-car', 'battery-assist', 'motorcycle-transport']) {
+    const photo = await readFile('dist/images/' + file + '.webp');
+    assert.equal(photo.toString('ascii', 8, 12), 'WEBP', file);
+  }
+  assert.match(html, /Jeffrey M Dean, Wikimedia Commons/);
+  assert.match(html, /creativecommons\.org\/licenses\/by-sa\/3\.0\//);
+});
