@@ -1,22 +1,16 @@
-# Tasarım uygulama planı
+# Burak Bey — çok sayfalı görsel uygulama planı
 
-**Yön:** “Gece yol yardım noktası” — grafit katmanlar, sıcak sarı uyarı ışığı, teknik çizim izleri ve yüksek kontrastlı tipografi. Renk aksanı küçük alanlarda kalacak; Manrope başlık/gövde, DM Mono teknik etiket ve numaralarda kullanılacak.
+| Rol | Uygulama |
+|---|---|
+| Zemin ve katman | #0b0b0b ana zemin, #141414 yüzey, ince beyaz kontur |
+| Metin ve vurgu | #f8f7f2 başlık, #bcbab3 gövde, #ffd60a CTA ve aktif durum, #111111 düğme metni |
+| Tipografi | Yerel Barlow Condensed 700 başlık, yerel Manrope gövde ve kontroller |
+| Teknik motif | Diyagonal reflektif şerit, metal gövde, sinyal halkaları ve ince ızgara |
 
-## Görsel akış
+Kompakt sabit gezinme, Burak Bey işareti, dört sayfa bağlantısı ve sarı arama düğmesi. İlk sahne solda iki satırlık yerel başlığı, açıklamayı ve iki CTA'yı taşır. Sağda sarı diyagonal zemin üzerinde CSS ile üretilen acil çağrı işareti ve koyu telefon paneli bulunur. İşletme aracına ait fotoğraf sağlanmadığından görsel tamamen grafik karakterde kalır.
 
-1. **Üst gezinme:** koyu zeminde kompakt marka imzası, Hizmetler/Süreç/Sorular bağlantıları ve belirgin ara CTA’sı. Telefonda aynı gezinme tam genişlikli, klavyeyle açılıp kapanan bir menüye dönüşür.
-2. **Hero:** asimetrik metin + özgün platform çekici/otomobil SVG sahnesi. İnce yol çizgileri, düşük opaklıklı teknik grid ve kontrollü sarı ışık kullanılır. Başlık Keçiören ve hizmet türünü ilk ekranda söyler; arama ve WhatsApp erişilebilir CTA’lardır.
-3. **Hızlı hizmet şeridi:** hero alt kenarına bağlanan, eşit olmayan ağırlıkta kısa hizmet bağlantıları; kartlar gerçek hizmet başlıklarına ve sayfa içi hedeflerine gider.
-4. **Hizmet listesi:** açık-koyu katmanlı, geniş yatay hizmet satırları; her satır özgün, cevap odaklı metin ve doğrudan iletişim bağlantısı içerir. Stok fotoğraf ve kanıtsız filo/varış iddiası kullanılmaz.
-5. **İmza sahnesi:** çekici ve araç illüstrasyonunu geniş yatay kompozisyonda tekrar merkezler. Yanındaki içerik araç türü, konum ve varış noktası bilgisinin nasıl planlamayı kolaylaştırdığını açıklar; bunlar işletme performans iddiası gibi sunulmaz.
-6. **Süreç ve güven:** üç gerçek iletişim adımı; sayaç/yorum/puan yerine kullanıcının arama sırasında vereceği bilgiler. Her adımın CTA’sı ara bağlantısına çıkar.
-7. **SSS ve kapanış:** gerçek arama niyetlerini yanıtlayan SSS, ardından Keçiören/Ankara bağlamı, harita yerleştirmesi, telefon ve yol tarifiyle koyu iletişim sahnesi.
-8. **Alt bilgi:** işletme adı, Keçiören/Ankara, telefon, Maps bağlantısı, gizlilik açıklaması ve RASKAN logosu.
+Altı hızlı hizmet kartı hero alt kenarına bağlanır. Ardından halka ve ızgara üzerinde üç seçilebilir yardım senaryosu açılır. Önceki/sonraki düğmeleri, konu düğmeleri ve dokunarak kaydırma aynı görünümü yönetir. Sonraki bölümlerde iki kolonlu hizmet süreci, çağrı paneli ve Google Maps bağlantılı iletişim kapanışı yer alır. RASKAN işareti ve sayfa bağlantıları footer'da kullanılır.
 
-## Uygulama ve kalite ölçütleri
+İç sayfalar ortalanmış kompakt başlıklarla açılır. Hizmetlerin yedi yatay paneli dönüşümlü hizalanır. Neden Biz sayfası süreci ve sık sorulanları, İletişim telefon/WhatsApp ve haritayı, Gizlilik ise ölçüm tercihini açıklar. Mevcut ana sayfa çapaları eski bağlantıların hedefini korur.
 
-- Tek gerçek işletme varlığı kullanıcıdan gelen ad/telefon/WhatsApp/Maps bağlantısıdır. Özgün SVG teknik illüstrasyondur; gerçek araç, çalışan veya fotoğraf olduğu iddia edilmez.
-- Mobil düzen 390 px genişlikte yeniden kurulur; sticky iletişim düğmesi, safe-area alt boşluğu ve en az 44 px dokunma alanı korunur.
-- Görsel hareket kısa ve dekoratiftir; içerik animasyon olmadan görünür, `prefers-reduced-motion` hareketi kapatır.
-- Metin ve kontrol kontrastı WCAG AA hedefiyle doğrulanır. CTA/anchor hedefleri, klavye odağı ve menü Escape davranışı kontrol edilir.
-- SEO tek sayfalı mimariyi korur: araştırma ayrı URL ihtiyacını doğrulamadı. Tek H1, hizmet H2/H3’leri, tutarlı title/description/canonical/hreflang/schema, sitemap, robots, llms, noindex ve tam HTML yeniden kontrol edilir.
+Mobilde hero metni ortalanır, grafik sahne daralır ve arama paneli sahnenin altında yer alır. Servis kartları yatay satıra, bölümler tek kolona döner. Menü tam ekran açılır ve sticky iletişim safe-area boşluğuna uyar. Sistem hareketi azaltma tercihi dekoratif geçişleri kapatır.

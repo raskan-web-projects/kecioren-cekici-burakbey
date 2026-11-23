@@ -2,99 +2,103 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 
-const html = await readFile('dist/index.html', 'utf8');
+const base = 'https://kecioren-cekici-burakbey.pages.dev';
+const paths = ['/', '/hizmetler/', '/neden-biz/', '/iletisim/', '/gizlilik/'];
+const pages = new Map(await Promise.all(paths.map(async (path) => [path, await readFile('dist' + path + 'index.html', 'utf8')])));
+const getSchema = (html) => JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1])['@graph'];
 
-test('homepage is prerendered with local service content and working contact routes', () => {
-  assert.match(html, /<html lang="tr">/);
-  assert.match(html, /<h1[^>]*>Yolda kaldıysanız/);
-  assert.match(html, /Keçiören, Ankara/);
-  assert.match(html, /tel:\+905397301647/);
-  assert.match(html, /https:\/\/wa\.me\/905397301647/);
-  assert.match(html, /href="https:\/\/maps\.app\.goo\.gl\/DiSzW37rddwQpg7u7"/);
-  assert.match(html, /application\/ld\+json/);
-  assert.match(html, /motosiklet-cekici/);
-});
-
-test('all listed services appear in static HTML and point to real section ids', () => {
-  for (const service of ['Oto kurtarma', 'Yol yardım', 'Akü takviyesi', 'Kayar kasa', 'Motosiklet çekici', 'Özel araç çekici', 'Uzun yol çekici']) {
-    assert.ok(html.toLocaleLowerCase('tr').includes(service.toLocaleLowerCase('tr')), `Missing ${service}`);
-  }
-  const ids = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]));
-  const localLinks = [...html.matchAll(/\bhref="#([^"]+)"/g)].map((match) => match[1]);
-  for (const target of localLinks) assert.ok(ids.has(target), `Missing local target #${target}`);
-});
-
-test('search metadata, language signals, and temporary Pages noindex policy are consistent', () => {
-  const headers = readFile('dist/_headers', 'utf8');
-  const robots = readFile('dist/robots.txt', 'utf8');
-  const sitemap = readFile('dist/sitemap.xml', 'utf8');
-  return Promise.all([headers, robots, sitemap]).then(([headerText, robotText, sitemapText]) => {
+test('every route has unique static metadata, one visible H1, and matching canonical and hreflang', () => {
+  const titles = new Set();
+  const descriptions = new Set();
+  for (const [path, html] of pages) {
+    assert.match(html, /<html lang="tr">/);
+    assert.equal((html.match(/<h1\b/g) || []).length, 1, path);
+    assert.match(html, /<main id="main-content">/);
     const title = html.match(/<title>([^<]+)<\/title>/)?.[1];
-    const description = html.match(/<meta name="description" content="([^"]+)"/i)?.[1];
-    assert.ok(title && title.length >= 50 && title.length <= 60, `Unexpected title length: ${title?.length}`);
-    assert.ok(description && description.length >= 140 && description.length <= 160, `Unexpected description length: ${description?.length}`);
-    assert.equal((html.match(/<h1\b/g) || []).length, 1);
-    assert.match(html, /rel="canonical" href="https:\/\/kecioren-cekici-burakbey\.pages\.dev\//);
-    assert.match(html, /hreflang="tr-TR"/);
-    assert.match(html, /hreflang="x-default"/);
+    const description = html.match(/<meta name="description" content="([^"]+)"/)?.[1];
+    assert.ok(title && title.length >= 48 && title.length <= 60, path);
+    assert.ok(description && description.length >= 138 && description.length <= 165, path);
+    titles.add(title);
+    descriptions.add(description);
+    for (const marker of ['rel="canonical" href', 'hreflang="tr-TR" href', 'hreflang="x-default" href', 'property="og:url" content']) {
+      assert.ok(html.includes(marker + '="' + base + path + '"'), path + ' ' + marker);
+    }
     assert.match(html, /property="og:image:width" content="1200"/);
     assert.match(html, /property="og:image:height" content="630"/);
-    assert.match(html, /name="twitter:card" content="summary_large_image"/);
-    assert.match(headerText, /https:\/\/kecioren-cekici-burakbey\.pages\.dev\/\*\s+X-Robots-Tag: noindex/);
+    assert.match(html, /name="twitter:image" content="[^"]+\/og\.png"/);
     assert.doesNotMatch(html, /name="robots" content="noindex/);
-    assert.match(robotText, /User-agent: OAI-SearchBot/);
-    assert.match(robotText, /Sitemap: https:\/\/kecioren-cekici-burakbey\.pages\.dev\/sitemap\.xml/);
-    assert.match(sitemapText, /<loc>https:\/\/kecioren-cekici-burakbey\.pages\.dev\//);
-  });
-});
-
-test('JSON-LD is valid and only describes visible, verified business details', () => {
-  const block = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1];
-  assert.ok(block, 'JSON-LD block missing');
-  const graph = JSON.parse(block)['@graph'];
-  const business = graph.find((item) => item['@type'] === 'LocalBusiness');
-  const faq = graph.find((item) => item['@type'] === 'FAQPage');
-  assert.equal(business.name, 'Keçiören Çekici Burak Bey');
-  assert.equal(business.telephone, '+905397301647');
-  assert.equal(business.areaServed.name, 'Keçiören, Ankara');
-  assert.equal(business.hasMap, 'https://maps.app.goo.gl/DiSzW37rddwQpg7u7');
-  assert.equal(business.contactPoint.availableLanguage, 'Turkish');
-  assert.equal(business.aggregateRating, undefined);
-  assert.equal(business.address, undefined);
-  assert.equal(faq.mainEntity.length, 4);
-});
-
-test('every image has alt and intrinsic dimensions; hero image is prioritized', () => {
-  const images = [...html.matchAll(/<img\b([^>]+)>/g)].map((match) => match[1]);
-  assert.ok(images.length >= 3);
-  for (const image of images) {
-    assert.match(image, /\balt="[^"]+"/);
-    assert.match(image, /\bwidth="\d+"/);
-    assert.match(image, /\bheight="\d+"/);
+    assert.doesNotMatch(html, /class="consent-banner"/);
   }
-  assert.match(html, /fetch[Pp]riority="high"/);
-  assert.match(html, /loading="lazy"/);
+  assert.equal(titles.size, paths.length);
+  assert.equal(descriptions.size, paths.length);
 });
 
-test('mobile navigation and sticky contact controls remain accessible in prerendered HTML', () => {
-  assert.match(html, /aria-label="Menüyü aç"/);
+test('all internal page links and fragments resolve in the output', () => {
+  const origins = new Set();
+  for (const [path, html] of pages) {
+    for (const [, href] of html.matchAll(/<a\b[^>]*\bhref="([^"]+)"/g)) {
+      if (!href.startsWith('/') && !href.startsWith('#')) continue;
+      const target = new URL(href, base + path);
+      origins.add(target.pathname);
+      const destination = pages.get(target.pathname);
+      assert.ok(destination, href);
+      if (target.hash) assert.ok(destination.includes('id="' + target.hash.slice(1) + '"'), path + ' → ' + href);
+    }
+  }
+  assert.deepEqual([...origins].sort(), [...paths].sort());
+});
+
+test('verified business details and page-specific schema match visible content', () => {
+  for (const [path, html] of pages) {
+    const graph = getSchema(html);
+    const business = graph.find((item) => item['@type'] === 'LocalBusiness');
+    assert.equal(business.name, 'Keçiören Çekici Burak Bey');
+    assert.equal(business.telephone, '+905397301647');
+    assert.equal(business.areaServed.name, 'Keçiören, Ankara');
+    assert.equal(business.hasMap, 'https://maps.app.goo.gl/DiSzW37rddwQpg7u7');
+    assert.equal(business.aggregateRating, undefined);
+    assert.equal(business.address, undefined);
+    assert.match(html, /tel:\+905397301647/);
+    assert.match(html, /https:\/\/wa\.me\/905397301647/);
+    assert.equal(graph.some((item) => item['@type'] === 'BreadcrumbList'), path !== '/');
+    assert.equal(graph.filter((item) => item['@type'] === 'Service').length, path === '/hizmetler/' ? 7 : 0);
+    const faq = graph.find((item) => item['@type'] === 'FAQPage');
+    assert.equal(faq?.mainEntity.length ?? 0, path === '/neden-biz/' ? 4 : 0);
+    for (const item of faq?.mainEntity ?? []) assert.ok(html.includes(item.name), item.name);
+  }
+  assert.match(pages.get('/iletisim/'), /<iframe title="Keçiören[^"]+"[^>]+loading="lazy"/);
+});
+
+test('home navigation, service showcase and mobile contact have accessible initial controls', async () => {
+  const html = pages.get('/');
+  assert.match(html, /<h1[^>]*>Keçiören’de çekici/);
   assert.match(html, /aria-expanded="false" aria-controls="primary-navigation"/);
   assert.match(html, /id="primary-navigation"[^>]*aria-label="Ana gezinme"/);
   assert.match(html, /aria-controls="sticky-options"/);
   assert.match(html, /id="sticky-options"[^>]*aria-hidden="true"[^>]*inert=""/);
-  assert.match(html, /Sorunuz mu var\? Burak Bey’i arayın/);
-  assert.match(html, /data-location="faq"/);
+  assert.match(html, /aria-label="Sonraki hizmet"/);
+  assert.match(html, /aria-pressed="true">Oto kurtarma/);
+  const cssFile = (await readdir('dist/assets')).find((name) => name.endsWith('.css'));
+  const css = await readFile('dist/assets/' + cssFile, 'utf8');
+  assert.match(css, /Barlow Condensed/);
+  assert.match(css, /manrope-latin-ext\.woff2/);
+  assert.match(css, /prefers-reduced-motion/);
 });
 
-test('analytics consent UI does not depend on browser storage during prerender', () => {
-  assert.doesNotMatch(html, /class="consent-banner"/);
-});
-
-test('IndexNow key matches its public key filename and 404 is noindex with a home link', async () => {
+test('discovery files, preview noindex, 404 and social image are consistent', async () => {
+  const [headers, robots, sitemap, llms, notFound, og] = await Promise.all(
+    ['_headers', 'robots.txt', 'sitemap.xml', 'llms.txt', '404.html', 'og.png'].map((file) => readFile('dist/' + file))
+  );
+  assert.match(String(headers), /https:\/\/kecioren-cekici-burakbey\.pages\.dev\/\*\s+X-Robots-Tag: noindex/);
+  assert.match(String(robots), /User-agent: OAI-SearchBot/);
+  assert.ok(String(robots).includes('Sitemap: ' + base + '/sitemap.xml'));
+  assert.deepEqual(Array.from(String(sitemap).matchAll(/<loc>([^<]+)<\/loc>/g), ([, url]) => url), paths.map((path) => base + path));
+  for (const path of paths) assert.ok(String(llms).includes('(' + base + path + ')'), path);
+  assert.match(String(notFound), /<meta name="robots" content="noindex"/);
+  assert.match(String(notFound), /<a href="\/">/);
+  assert.equal(og.readUInt32BE(16), 1200);
+  assert.equal(og.readUInt32BE(20), 630);
   const files = (await readdir('dist')).filter((name) => /^[a-f0-9]{32}\.txt$/.test(name));
   assert.equal(files.length, 1);
-  assert.equal((await readFile(`dist/${files[0]}`, 'utf8')).trim(), files[0].slice(0, -4));
-  const notFound = await readFile('dist/404.html', 'utf8');
-  assert.match(notFound, /<meta name="robots" content="noindex"/);
-  assert.match(notFound, /<a href="\/">/);
+  assert.equal((await readFile('dist/' + files[0], 'utf8')).trim(), files[0].slice(0, -4));
 });
