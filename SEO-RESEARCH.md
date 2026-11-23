@@ -131,3 +131,35 @@ Site düzeyinde QA: `robots.txt` sitemap satırı ve AI crawler izinlerini içer
 - Dağıtım sonrası OpenSEO audit `4c526c7b-5130-43cd-a5ee-098eea83c45f` tamamlandı: 1/1 sayfa, HTTP 200, 541 kelime, bir H1, 3 görsel ve eksik alt yok, 16 ms crawler yanıtı. Tek uyarı `noindex-page` — geçici `pages.dev` politikasının beklenen sonucu. Tarayıcı `internalLinkCount: 0` gösteriyor çünkü tek URL'de fragment bağlantılarını ayrı crawl URL saymıyor; kaynak testleri 11 fragment link hedefinin tamamını doğruluyor. Lighthouse bu taramada çalıştırılmadı.
 
 Mobil Lighthouse ve 1440/390 px ekran görüntüsü alınmadı: Computer Use aracı Windows'taki Chrome URL'sini güvenle saptayamadığı için görsel tarayıcı çalışması durduruldu. Bu nedenle görsel kaliteye dair ekran görüntüsü kanıtı iddia edilmiyor; CSS'te 740/420 px kırılımları, focus görünümü, 44 px dokunma hedefleri ve reduced-motion kuralı statik olarak kontrol edildi.
+
+## 23 Kasım — çok sayfalı tasarım güncellemesi
+
+22.11.2026 tarihli OpenSEO araştırması ve Maps/telefon doğrulamaları bu mevcut projenin giriş verisidir. 23.11.2026 tarihinde OpenSEO HEAD hâlâ `af3f995fe3ebbe21298df152465a5436842354ee` olarak doğrulandı. Önceki sayfa planı aşağıdaki URL yapısıyla güncellendi.
+
+| URL | Niyet ve mevcut araştırma bağlantısı |
+|---|---|
+| `/` | Keçiören çekici ve oto kurtarma, doğrudan arama ve WhatsApp |
+| `/hizmetler/` | Yol yardım, kasa tipleri, motosiklet, akü ve taşıma seçeneklerini kıyaslama. Agah ve Ahtapot örnekleri |
+| `/neden-biz/` | Yardım süreci, çekici ücreti ve telefonla paylaşılacak bilgiler. Armut fiyat niyeti ve Dağ Oto Kurtarma süreç örnekleri |
+| `/iletisim/` | Marka sorgusu, doğrulanmış telefon ve işletme harita bağlantısı |
+| `/gizlilik/` | İletişim kanalları ve analitik tercihi |
+
+Ana sayfadan iç sayfalara doğrudan HTML bağlantıları bulunur. Hizmetler için tek kapsamlı rehber kullanılır. Tek dil, ayrı canonical ve metadata, sitemap, BreadcrumbList ve görünür içerikle eşleşen schema korunur.
+
+### Yayın öncesi teknik doğrulama
+
+23.11.2026 tarihli Wrangler Pages yerel önizlemesi ve üretim çıktısı testleri:
+
+| URL | HTTP | JS'siz içerik ve H1 | Title / description | Canonical ve alternates | OG/Twitter | Geçerli JSON-LD | İç link ve sitemap |
+|---|---:|---|---|---|---|---|---|
+| / | 200 | Var, 1 | Benzersiz | Kendisi, tr-TR ve x-default | Var | WebSite, LocalBusiness | Var |
+| /hizmetler/ | 200 | Var, 1 | Benzersiz | Kendisi, tr-TR ve x-default | Var | WebSite, LocalBusiness, BreadcrumbList, 7 Service | Var |
+| /neden-biz/ | 200 | Var, 1 | Benzersiz | Kendisi, tr-TR ve x-default | Var | WebSite, LocalBusiness, BreadcrumbList, FAQPage | Var |
+| /iletisim/ | 200 | Var, 1 | Benzersiz | Kendisi, tr-TR ve x-default | Var | WebSite, LocalBusiness, BreadcrumbList | Var |
+| /gizlilik/ | 200 | Var, 1 | Benzersiz | Kendisi, tr-TR ve x-default | Var | WebSite, LocalBusiness, BreadcrumbList | Var |
+
+Beş sayfanın HTML'inde noindex meta etiketi yok. Geçici Pages alanı için host düzeyindeki X-Robots-Tag noindex kuralı korunuyor. Bulunmayan yol HTTP 404 ve noindex döndürüyor. robots.txt, sitemap.xml, llms.txt, IndexNow dosyası ve 1200 × 630 PNG sosyal önizlemesi doğrulandı. Yerel Pages önizlemesi slash takısını 308 ile normalleştiriyor ve sorgu parametrelerini koruyor.
+
+Chrome ile Emre Oto Lastik referansı ve yeni tasarım 1440 px ve 390 px genişlikte incelendi. Beş URL'de yatay taşma veya React hidratasyon hatası gözlenmedi. Hizmet vitrini, mobil menü ve iletişim menüsü doğrulandı. Görsel karşılaştırmada harita gömüsü sabit bir test yanıtı kullandı; gerçek harita bağlantısı ve iframe adresi HTML'de ayrıca doğrulandı.
+
+Mobil Lighthouse, ana sayfanın yerel Pages çıktısında: performans 97, erişilebilirlik 100, iyi uygulamalar 100, SEO 100. LCP 2,1 sn, CLS 0,045, TBT 0 ms. Bu laboratuvar ölçümüdür; saha INP verisi ölçülmedi.
