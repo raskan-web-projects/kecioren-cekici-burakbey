@@ -1,3 +1,5 @@
 # Görsel kayıtları
 
-- `tow-scene.svg` — Bu site için özgün olarak hazırlanan, temsili çekici ve araç teknik illüstrasyonu. Gerçek işletme aracı/çalışanı fotoğrafı değildir.
+- Ana sayfadaki uyarı lambası CSS ile oluşturulmuş özgün bir grafik. Galeri için işletmenin kendi çekici ve saha fotoğrafları paylaşılmadı.
+- İletişim alanındaki harita, müşterinin paylaştığı Google Maps işletme profiline bağlanır.
+- Barlow Condensed ve Manrope lisansları yerel font dosyalarıyla birlikte tutulur.
