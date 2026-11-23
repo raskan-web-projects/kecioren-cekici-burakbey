@@ -7,9 +7,9 @@
 | Tipografi | Yerel Barlow Condensed 700 başlık, yerel Manrope gövde ve kontroller |
 | Teknik motif | Diyagonal reflektif şerit, metal gövde, sinyal halkaları ve ince ızgara |
 
-Kompakt sabit gezinme, Burak Bey işareti, dört sayfa bağlantısı ve sarı arama düğmesi. İlk sahne solda iki satırlık yerel başlığı, açıklamayı ve iki CTA'yı taşır. Sağda sarı diyagonal zemin üzerinde CSS ile üretilen acil çağrı işareti ve koyu telefon paneli bulunur. İşletme aracına ait fotoğraf sağlanmadığından görsel tamamen grafik karakterde kalır.
+Kompakt sabit gezinme, Burak Bey işareti, dört sayfa bağlantısı ve sarı arama düğmesi. İlk sahne solda iki satırlık yerel başlığı, açıklamayı ve iki CTA'yı taşır. Sağda sarı diyagonal zemin üzerinde gerçek çekici fotoğrafı ve koyu telefon paneli bulunur. Kullanım lisansı ve kaynaklar sitede belirtilir.
 
-Altı hızlı hizmet kartı hero alt kenarına bağlanır. Ardından halka ve ızgara üzerinde üç seçilebilir yardım senaryosu açılır. Önceki/sonraki düğmeleri, konu düğmeleri ve dokunarak kaydırma aynı görünümü yönetir. Sonraki bölümlerde iki kolonlu hizmet süreci, çağrı paneli ve Google Maps bağlantılı iletişim kapanışı yer alır. RASKAN işareti ve sayfa bağlantıları footer'da kullanılır.
+Altı hızlı hizmet kartı hero alt kenarına bağlanır. Ardından halka ve ızgara üzerinde fotoğraflı üç seçilebilir yardım senaryosu açılır. Önceki/sonraki düğmeleri, konu düğmeleri ve dokunarak kaydırma aynı görünümü yönetir. Sonraki bölümlerde iki kolonlu hizmet süreci, çağrı paneli ve Google Maps bağlantılı iletişim kapanışı yer alır. RASKAN işareti ve sayfa bağlantıları footer'da kullanılır.
 
 İç sayfalar ortalanmış kompakt başlıklarla açılır. Hizmetlerin yedi yatay paneli dönüşümlü hizalanır. Neden Biz sayfası süreci ve sık sorulanları, İletişim telefon/WhatsApp ve haritayı, Gizlilik ise ölçüm tercihini açıklar. Mevcut ana sayfa çapaları eski bağlantıların hedefini korur.
 
