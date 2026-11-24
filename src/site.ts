@@ -7,5 +7,5 @@ export const site = {
   city: 'Keçiören, Ankara',
   maps: 'https://maps.app.goo.gl/DiSzW37rddwQpg7u7',
   mapEmbed: 'https://www.google.com/maps?q=40.0011964%2C32.8615497&output=embed',
-  url: 'https://kecioren-cekici-burakbey.pages.dev'
+  url: 'https://kecioren-cekici-burakbey.maxdesignwebservice.workers.dev'
 } as const;

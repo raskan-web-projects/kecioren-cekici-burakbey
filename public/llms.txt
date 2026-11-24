@@ -8,10 +8,10 @@
 
 ## Sayfalar
 
-- [Ana sayfa](https://kecioren-cekici-burakbey.pages.dev/): Keçiören’de oto kurtarma ve yol yardım.
-- [Çekici ve yol yardım hizmetleri](https://kecioren-cekici-burakbey.pages.dev/hizmetler/): Akü takviyesi, kayar ve sabit kasa, motosiklet ve özel araç taşıma, uzun yol çekici.
-- [Çekici desteği nasıl planlanır?](https://kecioren-cekici-burakbey.pages.dev/neden-biz/): Çekici talebi, araç bilgileri ve taşıma süreci.
-- [İletişim](https://kecioren-cekici-burakbey.pages.dev/iletisim/): Telefon, WhatsApp ve Keçiören konumu.
-- [Gizlilik](https://kecioren-cekici-burakbey.pages.dev/gizlilik/): Site kullanımı ve analitik ölçüm tercihleri.
+- [Ana sayfa](https://kecioren-cekici-burakbey.maxdesignwebservice.workers.dev/): Keçiören’de oto kurtarma ve yol yardım.
+- [Çekici ve yol yardım hizmetleri](https://kecioren-cekici-burakbey.maxdesignwebservice.workers.dev/hizmetler/): Akü takviyesi, kayar ve sabit kasa, motosiklet ve özel araç taşıma, uzun yol çekici.
+- [Çekici desteği nasıl planlanır?](https://kecioren-cekici-burakbey.maxdesignwebservice.workers.dev/neden-biz/): Çekici talebi, araç bilgileri ve taşıma süreci.
+- [İletişim](https://kecioren-cekici-burakbey.maxdesignwebservice.workers.dev/iletisim/): Telefon, WhatsApp ve Keçiören konumu.
+- [Gizlilik](https://kecioren-cekici-burakbey.maxdesignwebservice.workers.dev/gizlilik/): Site kullanımı ve analitik ölçüm tercihleri.
 
 Hizmet uygunluğu, konum ve taşıma ayrıntıları için telefonla iletişim kurun.

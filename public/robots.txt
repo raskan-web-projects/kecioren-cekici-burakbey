@@ -31,4 +31,4 @@ Allow: /
 User-agent: Applebot-Extended
 Allow: /
 
-Sitemap: https://kecioren-cekici-burakbey.pages.dev/sitemap.xml
+Sitemap: https://kecioren-cekici-burakbey.maxdesignwebservice.workers.dev/sitemap.xml

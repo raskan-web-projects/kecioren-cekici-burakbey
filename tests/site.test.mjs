@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 
-const base = 'https://kecioren-cekici-burakbey.pages.dev';
+const base = 'https://kecioren-cekici-burakbey.maxdesignwebservice.workers.dev';
 const paths = ['/', '/hizmetler/', '/neden-biz/', '/iletisim/', '/gizlilik/'];
 const pages = new Map(await Promise.all(paths.map(async (path) => [path, await readFile('dist' + path + 'index.html', 'utf8')])));
 const getSchema = (html) => JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1])['@graph'];
@@ -85,11 +85,11 @@ test('home navigation, service showcase and mobile contact have accessible initi
   assert.match(css, /prefers-reduced-motion/);
 });
 
-test('discovery files, preview noindex, 404 and social image are consistent', async () => {
+test('discovery files, host-specific noindex, 404 and social image are consistent', async () => {
   const [headers, robots, sitemap, llms, notFound, og] = await Promise.all(
     ['_headers', 'robots.txt', 'sitemap.xml', 'llms.txt', '404.html', 'og.png'].map((file) => readFile('dist/' + file))
   );
-  assert.match(String(headers), /https:\/\/kecioren-cekici-burakbey\.pages\.dev\/\*\s+X-Robots-Tag: noindex/);
+  assert.ok(String(headers).replace(/\r\n/g, '\n').includes(base + '/*\n  X-Robots-Tag: noindex'));
   assert.match(String(robots), /User-agent: OAI-SearchBot/);
   assert.ok(String(robots).includes('Sitemap: ' + base + '/sitemap.xml'));
   assert.deepEqual(Array.from(String(sitemap).matchAll(/<loc>([^<]+)<\/loc>/g), ([, url]) => url), paths.map((path) => base + path));

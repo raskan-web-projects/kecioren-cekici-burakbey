@@ -17,8 +17,10 @@ npm run build
 npm test
 ```
 
-## Cloudflare Pages
+## Cloudflare Workers
 
-Deploy the `dist/` output as a Cloudflare Pages project named `kecioren-cekici-burakbey`. The temporary `pages.dev` hostname carries `X-Robots-Tag: noindex`; update `src/site.ts`, `public/robots.txt`, `public/llms.txt`, and the host-specific rule in `public/_headers` when a custom domain is connected.
+Workers Static Assets serves the prerendered HTML directly from the build output. Run `npm run build`, then `npm run preview` to check directory URLs and the custom 404 locally. Run `npm run deploy` from the verified main commit after CI passes.
+
+The public address is https://kecioren-cekici-burakbey.maxdesignwebservice.workers.dev/. This hostname carries `X-Robots-Tag: noindex`. When a custom domain is connected, update `src/site.ts`, `public/robots.txt`, and `public/llms.txt` together. Keep the host-specific robots header scoped to workers.dev.
 
 Set `VITE_GA_ID` only after the business supplies its GA4 Measurement ID. It is blank by default, so no Analytics script loads.
