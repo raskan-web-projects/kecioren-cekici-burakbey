@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && vite build --config vite.ssr.config.ts && node scripts/prerender.mjs",
-    "preview": "wrangler pages dev dist",
+    "preview": "wrangler dev",
     "test": "node --test",
-    "deploy": "wrangler pages deploy dist --project-name=kecioren-cekici-burakbey --branch=main",
+    "deploy": "wrangler deploy",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

@@ -163,3 +163,7 @@ Beş sayfanın HTML'inde noindex meta etiketi yok. Geçici Pages alanı için ho
 Chrome ile Emre Oto Lastik referansı ve yeni tasarım 1440 px ve 390 px genişlikte incelendi. Beş URL'de yatay taşma veya React hidratasyon hatası gözlenmedi. Hizmet vitrini, mobil menü ve iletişim menüsü doğrulandı. Görsel karşılaştırmada harita gömüsü sabit bir test yanıtı kullandı; gerçek harita bağlantısı ve iframe adresi HTML'de ayrıca doğrulandı.
 
 Mobil Lighthouse, ana sayfanın yerel Pages çıktısında: performans 97, erişilebilirlik 100, iyi uygulamalar 100, SEO 100. LCP 2,1 sn, CLS 0,045, TBT 0 ms. Bu laboratuvar ölçümüdür; saha INP verisi ölçülmedi.
+
+## 24 Kasım — Workers Static Assets adresi
+
+Türkiye'den erişim için yeni yayın adresi https://kecioren-cekici-burakbey.maxdesignwebservice.workers.dev/. Beş mevcut yol ve statik HTML yapısı korunur. Canonical, hreflang, sosyal önizleme, JSON-LD, sitemap, robots.txt ve llms.txt yeni adresi kullanır. Platform adresine özel noindex ve gerçek HTTP 404 politikası korunur.
