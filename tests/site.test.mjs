@@ -54,11 +54,13 @@ test('verified business details and page-specific schema match visible content',
     const business = graph.find((item) => item['@type'] === 'LocalBusiness');
     assert.equal(business.name, 'Keçiören Çekici Burak Bey');
     assert.equal(business.telephone, '+905397301647');
+    assert.deepEqual(business.contactPoint.map((point) => point.telephone), ['+905397301647', '+905326770775']);
     assert.equal(business.areaServed.name, 'Keçiören, Ankara');
     assert.equal(business.hasMap, 'https://maps.app.goo.gl/DiSzW37rddwQpg7u7');
     assert.equal(business.aggregateRating, undefined);
     assert.equal(business.address, undefined);
     assert.match(html, /tel:\+905397301647/);
+    assert.match(html, /href="tel:\+905326770775"[^>]*>0532 677 07 75<\/a>/);
     assert.match(html, /https:\/\/wa\.me\/905397301647/);
     assert.equal(graph.some((item) => item['@type'] === 'BreadcrumbList'), path !== '/');
     assert.equal(graph.filter((item) => item['@type'] === 'Service').length, path === '/hizmetler/' ? 7 : 0);
@@ -67,6 +69,7 @@ test('verified business details and page-specific schema match visible content',
     for (const item of faq?.mainEntity ?? []) assert.ok(html.includes(item.name), item.name);
   }
   assert.match(pages.get('/iletisim/'), /<iframe title="Keçiören[^"]+"[^>]+loading="lazy"/);
+  assert.match(pages.get('/iletisim/'), /İkinci telefon<\/dt><dd><a href="tel:\+905326770775"/);
 });
 
 test('home navigation, service showcase and mobile contact have accessible initial controls', async () => {
@@ -90,6 +93,7 @@ test('discovery files, host-specific noindex, 404 and social image are consisten
     ['_headers', 'robots.txt', 'sitemap.xml', 'llms.txt', '404.html', 'og.png'].map((file) => readFile('dist/' + file))
   );
   assert.ok(String(headers).replace(/\r\n/g, '\n').includes(base + '/*\n  X-Robots-Tag: noindex'));
+  assert.ok(String(headers).replace(/\r\n/g, '\n').includes('https://kecioren-cekici-burakbey.pages.dev/*\n  X-Robots-Tag: noindex'));
   assert.match(String(robots), /User-agent: OAI-SearchBot/);
   assert.ok(String(robots).includes('Sitemap: ' + base + '/sitemap.xml'));
   assert.deepEqual(Array.from(String(sitemap).matchAll(/<loc>([^<]+)<\/loc>/g), ([, url]) => url), paths.map((path) => base + path));
@@ -103,17 +107,37 @@ test('discovery files, host-specific noindex, 404 and social image are consisten
   assert.equal((await readFile('dist/' + files[0], 'utf8')).trim(), files[0].slice(0, -4));
 });
 
-test('home serves a prioritized responsive towing photo and three locally hosted service photos', async () => {
-  const html = pages.get('/');
-  assert.match(html, /<img[^>]+alt="Yolda otomobil taşıyan platform çekici"[^>]+fetchPriority="high"/i);
-  assert.match(html, /\/images\/hero-tow-mobile\.webp 900w, \/images\/hero-tow\.webp 2000w/);
-  for (const file of ['flatbed-car', 'battery-assist', 'motorcycle-transport']) {
-    assert.match(html, new RegExp('<img[^>]+src="/images/' + file + '\\.webp"[^>]+loading="lazy"'));
+test('the supplied logo appears in the header, footer, favicon and business schema', async () => {
+  for (const html of pages.values()) {
+    assert.equal([...html.matchAll(/class="brand" href="\/"[^>]*><img src="\/burakbey-logo\.webp"/g)].length, 2);
+    assert.match(html, /rel="icon" type="image\/png" sizes="128x128" href="\/burakbey-favicon\.png"/);
+    const business = getSchema(html).find((item) => item['@type'] === 'LocalBusiness');
+    assert.equal(business.logo, base + '/burakbey-logo.webp');
   }
-  for (const file of ['hero-tow', 'hero-tow-mobile', 'flatbed-car', 'battery-assist', 'motorcycle-transport']) {
-    const photo = await readFile('dist/images/' + file + '.webp');
+  const notFound = await readFile('dist/404.html', 'utf8');
+  assert.match(notFound, /href="\/burakbey-favicon\.png"/);
+  assert.match(notFound, /src="\/burakbey-logo\.webp"/);
+  const icon = await readFile('dist/burakbey-favicon.png');
+  assert.equal(icon.readUInt32BE(16), 128);
+  assert.equal(icon.readUInt32BE(20), 128);
+});
+
+test('all 12 supplied photos are rendered locally with responsive hero and lazy secondary images', async () => {
+  const html = pages.get('/');
+  assert.match(html, /<img[^>]+src="\/images\/gece-oto-kurtarma\.webp"[^>]+fetchPriority="high"/i);
+  assert.match(html, /\/images\/gece-oto-kurtarma-mobile\.webp 720w, \/images\/gece-oto-kurtarma\.webp 1440w/);
+  const photos = new Set();
+  for (const page of pages.values()) {
+    for (const [, file, attrs] of page.matchAll(/<img src="\/images\/([^"]+\.webp)"([^>]+)>/g)) {
+      photos.add(file);
+      assert.match(attrs, /alt="[^"]*"[^>]+width="\d+"[^>]+height="\d+"/);
+      if (file !== 'gece-oto-kurtarma.webp') assert.match(attrs, /loading="lazy"/);
+    }
+  }
+  assert.equal(photos.size, 12);
+  assert.match(pages.get('/iletisim/'), /src="\/images\/burakbey-isletme\.webp"/);
+  for (const file of [...photos, 'gece-oto-kurtarma-mobile.webp']) {
+    const photo = await readFile('dist/images/' + file);
     assert.equal(photo.toString('ascii', 8, 12), 'WEBP', file);
   }
-  assert.match(html, /Jeffrey M Dean, Wikimedia Commons/);
-  assert.match(html, /creativecommons\.org\/licenses\/by-sa\/3\.0\//);
 });

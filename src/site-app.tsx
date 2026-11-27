@@ -5,15 +5,14 @@ import { analyticsConsent, setAnalyticsConsent, track } from './analytics';
 import { routes, type Route } from './routes';
 import { HomePage } from './home-page';
 import { InteriorPage } from './interior-pages';
-import { Icon, phoneHref, whatsappHref } from './site-parts';
+import { Icon, phoneHref, secondaryPhoneHref, whatsappHref } from './site-parts';
 import { StructuredData } from './structured-data';
 
 const navRoutes = routes.filter((route) => route.path !== '/gizlilik/');
 
 function Brand() {
   return <a className="brand" href="/">
-    <span className="brand-mark"><Icon name="beacon" /></span>
-    <span className="brand-copy"><b>BURAK BEY</b><small>KEÇİÖREN ÇEKİCİ</small></span>
+    <img src={site.logo} alt="Burakbey Oto Kurtarma" width="752" height="212" />
   </a>;
 }
 
@@ -24,6 +23,7 @@ function Footer() {
       <nav aria-label="Alt gezinme">{navRoutes.map((item) => <a key={item.path} href={item.path}>{item.label}</a>)}</nav>
       <div className="footer-contact">
         <a href={phoneHref} data-event="click_phone" data-location="footer">{site.phoneDisplay}</a>
+        <a href={secondaryPhoneHref} data-event="click_phone" data-location="footer-secondary">{site.secondaryPhoneDisplay}</a>
         <a href={whatsappHref} target="_blank" rel="noreferrer" data-event="click_whatsapp" data-location="footer">WhatsApp</a>
         <a href={site.maps} target="_blank" rel="noreferrer" data-event="click_directions" data-location="footer">Google Maps</a>
       </div>
@@ -113,6 +113,7 @@ export function App({ route }: { route: Route }) {
     <div className="sticky-contact" ref={stickyRef} inert={menuOpen}>
       <div className="sticky-options" id="sticky-options" aria-hidden={!open} inert={!open} hidden={!open}>
         <a href={phoneHref} data-event="click_phone" data-location="sticky"><Icon name="phone" /> {tr.sticky.call}</a>
+        <a href={secondaryPhoneHref} data-event="click_phone" data-location="sticky-secondary"><Icon name="phone" /> {site.secondaryPhoneDisplay}</a>
         <a href={whatsappHref} target="_blank" rel="noreferrer" data-event="click_whatsapp" data-location="sticky"><Icon name="message" /> {tr.sticky.whatsapp}</a>
         <a href={site.maps} target="_blank" rel="noreferrer" data-event="click_directions" data-location="sticky"><Icon name="location" /> {tr.sticky.directions}</a>
       </div>

@@ -1,13 +1,15 @@
 import React, { useRef, useState } from 'react';
 import { tr } from './content/tr';
 import { site } from './site';
-import { ContactActions, Icon, MapPanel, phoneHref, ServiceIcon } from './site-parts';
+import { JobPhoto } from './photos';
+import { ContactActions, Icon, MapPanel, phoneHref, secondaryPhoneHref, ServiceIcon } from './site-parts';
 
 const scenarios = [
-  { service: tr.services[0], photo: 'flatbed-car.webp', alt: 'Platform çekicide taşınan bir otomobil', width: 900, height: 600 },
-  { service: tr.services[2], photo: 'battery-assist.webp', alt: 'Kabloları bağlı bir otomobil aküsünün yakın görünümü', width: 900, height: 600 },
-  { service: tr.services[4], photo: 'motorcycle-transport.webp', alt: 'Taşıma römorkuna kayışlarla sabitlenmiş bir motosiklet', width: 960, height: 637 }
+  { service: tr.services[0], photo: 'coupe' },
+  { service: tr.services[3], photo: 'panelVan' },
+  { service: tr.services[5], photo: 'ambulance' }
 ] as const;
+const gallery = ['rainyStreet', 'yellowVan', 'dusk', 'minibus', 'rainyAngle', 'lightCommercial'] as const;
 const highlights = [
   [tr.services[0], 'Arızalı araç taşıma'],
   [tr.services[1], 'Konuma göre destek'],
@@ -36,10 +38,10 @@ function ServiceShowcase() {
         startX.current = null;
       }}>
         <div className="showcase-photos">
-          {photos.map(({ service: item, photo, alt, width, height }, index) => {
+          {photos.map(({ service: item, photo }, index) => {
             const active = index === 1;
             return <div key={item.id} className={active ? 'showcase-photo is-active' : 'showcase-photo'} aria-hidden={active ? undefined : true}>
-              <img src={'/images/' + photo} alt={active ? alt : ''} width={width} height={height} loading="lazy" decoding="async" draggable={false} />
+              <JobPhoto name={photo} decorative={!active} />
             </div>;
           })}
         </div>
@@ -53,11 +55,6 @@ function ServiceShowcase() {
       <div className="showcase-controls" role="group" aria-label="Vitrindeki hizmetler">
         {scenarios.map(({ service: item }, index) => <button key={item.id} type="button" onClick={() => select(index)} aria-pressed={index === selected}>{item.title}</button>)}
       </div>
-      <details className="photo-credit">
-        <summary>Temsili fotoğrafların kaynakları</summary>
-        <p>Çekici: <a href="https://unsplash.com/photos/HZ_6ktzQWZ0">fr0ggy5</a>. Oto kurtarma: <a href="https://unsplash.com/photos/iJGax56o5yU">Ali Ananta</a>. Akü: <a href="https://unsplash.com/photos/E4Oz0TZUDe8">Wesley Tingey</a>. Bu üç fotoğraf <a href="https://unsplash.com/license">Unsplash Lisansı</a> kapsamında kullanılmıştır.</p>
-        <p>Motosiklet taşıma: <a href="https://commons.wikimedia.org/wiki/File:Open_motorcycle_trailer_with_motorcycle.jpg">Jeffrey M Dean, Wikimedia Commons</a>. WebP sürümü <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a> lisansıyla sunulur.</p>
-      </details>
     </div>
   </section>;
 }
@@ -74,7 +71,7 @@ export function HomePage() {
         </div>
         <div className="hero-visual">
           <div className="hero-art">
-            <img src="/images/hero-tow.webp" srcSet="/images/hero-tow-mobile.webp 900w, /images/hero-tow.webp 2000w" sizes="(max-width: 760px) 100vw, 54vw" alt="Yolda otomobil taşıyan platform çekici" width="2000" height="1145" fetchPriority="high" />
+            <img src="/images/gece-oto-kurtarma.webp" srcSet="/images/gece-oto-kurtarma-mobile.webp 720w, /images/gece-oto-kurtarma.webp 1440w" sizes="(max-width: 760px) min(495px, calc(100vw - 36px)), min(623px, 52vw)" alt="Gece hasarlı beyaz otomobil taşıyan Burakbey çekicisi" width="1440" height="1080" fetchPriority="high" />
           </div>
           <a className="hero-call-card" href={phoneHref} data-event="click_phone" data-location="hero-card">
             <span className="call-icon"><Icon name="phone" /></span>
@@ -90,7 +87,7 @@ export function HomePage() {
     </section>
     <ServiceShowcase />
     <section className="home-process wrap" id="surec">
-      <div className="process-visual" aria-hidden="true"><Icon name="location" /><Icon name="car" /><Icon name="phone" /></div>
+      <div className="process-visual"><JobPhoto name="nightTransport" /></div>
       <div>
         <p className="eyebrow">Yol yardım süreci</p><h2>Yardım isterken <em>neyi paylaşmalısınız?</em></h2>
         <p>Bulunduğunuz yeri, araç türünü ve yaşadığınız sorunu anlatın. Taşıma gerekiyorsa varış noktasını da belirtin.</p>
@@ -112,10 +109,17 @@ export function HomePage() {
           <p className="eyebrow">İletişim</p><h2>Keçiören’de <em>Burak Bey’e ulaşın.</em></h2>
           <p>{site.city} ve aracınıza uygun yardım seçeneği için doğrudan iletişime geçin.</p>
           <ContactActions location="home-contact" />
+          <a className="text-link backup-line" href={secondaryPhoneHref} data-event="click_phone" data-location="home-contact-secondary"><Icon name="phone" /> İkinci telefon · {site.secondaryPhoneDisplay}</a>
           <a className="text-link" href="/iletisim/">İletişim bilgileri <Icon name="arrow" /></a>
         </div>
         <MapPanel />
       </div>
+    </section>
+    <section className="photo-gallery wrap" aria-labelledby="gallery-title">
+      <h2 id="gallery-title">Çekici <em>galerisi</em></h2>
+      <ul className="photo-gallery-track" tabIndex={0} aria-labelledby="gallery-title">
+        {gallery.map((name) => <li key={name}><JobPhoto name={name} /></li>)}
+      </ul>
     </section>
   </>;
 }
