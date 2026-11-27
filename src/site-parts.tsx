@@ -36,6 +36,7 @@ export function ServiceIcon({ id }: { id: string }) {
 }
 
 export const phoneHref = 'tel:' + site.phone;
+export const secondaryPhoneHref = 'tel:' + site.secondaryPhone;
 export const whatsappHref = 'https://wa.me/' + site.whatsapp + '?text=' + encodeURIComponent(tr.whatsappMessage);
 
 export function ContactActions({ location, primaryLabel = 'Hemen ara' }: { location: string; primaryLabel?: string }) {

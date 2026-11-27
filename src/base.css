@@ -41,12 +41,8 @@ h1 em, h2 em { color: var(--accent); font-style: normal; }
 .site-header { position: sticky; z-index: 10; top: 0; border-bottom: 1px solid var(--line); background: #0b0b0bf0; backdrop-filter: blur(14px); }
 .header-inner, .site-nav, .brand, .nav-call { display: flex; align-items: center; }
 .header-inner { justify-content: space-between; min-height: 74px; gap: 24px; }
-.brand { gap: 11px; width: max-content; white-space: nowrap; }
-.brand-mark { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--accent); color: var(--accent-ink); }
-.brand-mark .icon { width: 26px; height: 26px; }
-.brand-copy { display: grid; line-height: 1; gap: 4px; }
-.brand-copy b { font: 700 1.55rem/1 var(--display); letter-spacing: .055em; }
-.brand-copy small { color: var(--muted); font-size: .59rem; font-weight: 800; letter-spacing: .12em; }
+.brand { width: fit-content; min-height: 44px; }
+.brand img { display: block; width: clamp(152px, 18vw, 196px); height: auto; }
 .site-nav { gap: clamp(16px, 2.5vw, 35px); font-size: .88rem; font-weight: 750; }
 .site-nav > a:not(.nav-call) { display: grid; place-items: center; min-height: 46px; position: relative; }
 .site-nav > a:not(.nav-call):hover, .site-nav > a[aria-current] { color: var(--accent); }

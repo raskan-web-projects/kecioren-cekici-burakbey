@@ -167,3 +167,21 @@ Mobil Lighthouse, ana sayfanın yerel Pages çıktısında: performans 97, eriş
 ## 24 Kasım — Workers Static Assets adresi
 
 Türkiye'den erişim için yeni yayın adresi https://kecioren-cekici-burakbey.maxdesignwebservice.workers.dev/. Beş mevcut yol ve statik HTML yapısı korunur. Canonical, hreflang, sosyal önizleme, JSON-LD, sitemap, robots.txt ve llms.txt yeni adresi kullanır. Platform adresine özel noindex ve gerçek HTTP 404 politikası korunur.
+
+## 27 Kasım — işletme fotoğrafları, logo ve ikinci telefon
+
+Üretim çıktısında beş URL'nin statik içeriği, tek H1'i, benzersiz başlığı ve açıklaması, kendi canonical adresi, tr-TR ve x-default karşılıkları, OG ve Twitter etiketleri, iç bağlantıları ve sitemap kaydı doğrulandı. Geçerli JSON-LD tipleri aşağıdadır.
+
+| URL | JSON-LD |
+| --- | --- |
+| / | WebSite, LocalBusiness |
+| /hizmetler/ | WebSite, LocalBusiness, BreadcrumbList, 7 Service |
+| /neden-biz/ | WebSite, LocalBusiness, BreadcrumbList, FAQPage |
+| /iletisim/ | WebSite, LocalBusiness, BreadcrumbList |
+| /gizlilik/ | WebSite, LocalBusiness, BreadcrumbList |
+
+İkinci numara 0532 677 07 75, aranabilir bağlantılarda, LocalBusiness iletişim noktalarında ve llms.txt dosyasında yer alır. İşletme logosu ve 1200 × 630 sosyal paylaşım görseli güncellendi. Sağlanan 12 fotoğraf WebP olarak sunulur. Açılış görseli mobil boyut ve yüksek öncelik kullanır. Diğer fotoğraflar ihtiyaç oldukça yüklenir. [Fotoğraf eşlemesi](public/images/ATTRIBUTIONS.md)
+
+Robots, sitemap, llms.txt, IndexNow ve 404 doğrulamaları geçti. Workers ve Pages adreslerinin noindex kuralı alan adına özeldir. Chrome ile 1440 px ve 390 px genişlikte beş URL, görseller, vitrin, galeri ve telefon bağlantıları kontrol edildi. Yerel görsel kontrolde Google Maps gömüsü için sabit test yanıtı kullanıldı. Gerçek harita ve WhatsApp bağlantıları derlenmiş HTML'de doğrulandı.
+
+Yerel mobil Lighthouse ölçümü: performans 94, erişilebilirlik 100, iyi uygulamalar 100 ve SEO 100. LCP 3,0 sn, CLS 0,045, TBT 0 ms. LCP laboratuvar ölçümünde 2,5 sn hedefinin üstünde kaldı. Saha INP ölçülmedi.

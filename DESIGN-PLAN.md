@@ -14,3 +14,7 @@ Altı hızlı hizmet kartı hero alt kenarına bağlanır. Ardından halka ve ı
 İç sayfalar ortalanmış kompakt başlıklarla açılır. Hizmetlerin yedi yatay paneli dönüşümlü hizalanır. Neden Biz sayfası süreci ve sık sorulanları, İletişim telefon/WhatsApp ve haritayı, Gizlilik ise ölçüm tercihini açıklar. Mevcut ana sayfa çapaları eski bağlantıların hedefini korur.
 
 Mobilde hero metni ortalanır, grafik sahne daralır ve arama paneli sahnenin altında yer alır. Servis kartları yatay satıra, bölümler tek kolona döner. Menü tam ekran açılır ve sticky iletişim safe-area boşluğuna uyar. Sistem hareketi azaltma tercihi dekoratif geçişleri kapatır.
+
+## İşletme fotoğrafları ve logo
+
+Mevcut siyah, sarı ve yerel yazı tipi sistemi, işletmenin sarı beyaz logosuyla kullanılır. Gece çekilen kurtarma fotoğrafı açılışta sağdaki çerçeveye yerleşir, telefonda araç kadrajda kalır. Üç araç taşıma fotoğrafı ilgili vitrin ve hizmet panellerinde, kırmızı çekicinin gece çekimi süreç bölümünde, işletme tabelasının göründüğü fotoğraf iletişim sayfasında haritanın üzerinde kullanılır. Kalan altı kare ana sayfanın sonunda yatay kaydırılan galeriyi oluşturur. [Fotoğraf eşlemesi](public/images/ATTRIBUTIONS.md)

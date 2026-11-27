@@ -9,10 +9,12 @@ export function StructuredData({ route }: { route: Route }) {
   const graph: object[] = [
     { '@type': 'WebSite', '@id': home + '#website', url: home, name: site.name, inLanguage: tr.languageTag },
     {
-      '@type': 'LocalBusiness', '@id': business, name: site.name, url: home, logo: site.url + '/favicon.svg',
+      '@type': 'LocalBusiness', '@id': business, name: site.name, url: home, logo: site.url + site.logo,
       telephone: site.phone, description: tr.description, hasMap: site.maps, sameAs: [site.maps],
       areaServed: { '@type': 'AdministrativeArea', name: site.city },
-      contactPoint: { '@type': 'ContactPoint', telephone: site.phone, contactType: 'customer service', availableLanguage: 'Turkish' }
+      contactPoint: [site.phone, site.secondaryPhone].map((telephone) => ({
+        '@type': 'ContactPoint', telephone, contactType: 'customer service', availableLanguage: 'Turkish'
+      }))
     }
   ];
 

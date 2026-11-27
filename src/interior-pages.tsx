@@ -2,7 +2,8 @@ import type { ComponentProps } from 'react';
 import { tr } from './content/tr';
 import type { Route } from './routes';
 import { site } from './site';
-import { ContactActions, Icon, MapPanel, phoneHref, ServiceIcon } from './site-parts';
+import { JobPhoto, type PhotoName } from './photos';
+import { ContactActions, Icon, MapPanel, phoneHref, secondaryPhoneHref, ServiceIcon } from './site-parts';
 import './interior.css';
 
 type IconName = ComponentProps<typeof Icon>['name'];
@@ -26,6 +27,11 @@ const serviceDetails: Record<(typeof tr.services)[number]['id'], readonly string
 
 const requestDetails = ['Bulunduğunuz konum', 'Aracın türü ve durumu', 'Varsa taşıma için varış noktası'];
 const processIcons = ['phone', 'wrench', 'location'] as const;
+const servicePhotos: Partial<Record<(typeof tr.services)[number]['id'], PhotoName>> = {
+  'oto-kurtarma': 'coupe',
+  'kayar-sabit-kasa': 'panelVan',
+  'ozel-arac-cekici': 'ambulance'
+};
 
 function PageHeading({ route }: { route: Route }) {
   return <header className="interior-hero">
@@ -59,17 +65,20 @@ function InteriorCta({ location }: { location: string }) {
 function ServicesPage() {
   return <>
     <div className="interior-services wrap">
-      {tr.services.map((service) => <section className="interior-service" id={service.id} key={service.id} aria-labelledby={`${service.id}-title`}>
-        <div className="interior-service-copy">
-          <h2 id={`${service.id}-title`}>{service.title}</h2>
-          <p>{service.text}</p>
-          <Checklist items={serviceDetails[service.id]} />
-          <ContactActions location={`service-${service.id}`} />
-        </div>
-        <div className="interior-service-art" aria-hidden="true">
-          <span className="interior-icon"><ServiceIcon id={service.id} /></span>
-        </div>
-      </section>)}
+      {tr.services.map((service) => {
+        const photo = servicePhotos[service.id];
+        return <section className="interior-service" id={service.id} key={service.id} aria-labelledby={`${service.id}-title`}>
+          <div className="interior-service-copy">
+            <h2 id={`${service.id}-title`}>{service.title}</h2>
+            <p>{service.text}</p>
+            <Checklist items={serviceDetails[service.id]} />
+            <ContactActions location={`service-${service.id}`} />
+          </div>
+          {photo
+            ? <div className="interior-service-art service-photo"><JobPhoto name={photo} /></div>
+            : <div className="interior-service-art" aria-hidden="true"><span className="interior-icon"><ServiceIcon id={service.id} /></span></div>}
+        </section>;
+      })}
     </div>
     <InteriorCta location="services-bottom" />
   </>;
@@ -122,13 +131,20 @@ function ContactPage() {
           <dd><a href={phoneHref} data-event="click_phone" data-location="contact-details">{site.phoneDisplay}</a></dd>
         </div>
         <div>
+          <dt><span className="interior-icon"><Icon name="phone" /></span>İkinci telefon</dt>
+          <dd><a href={secondaryPhoneHref} data-event="click_phone" data-location="contact-details-secondary">{site.secondaryPhoneDisplay}</a></dd>
+        </div>
+        <div>
           <dt><span className="interior-icon"><Icon name="location" /></span>Hizmet bölgesi</dt>
           <dd>{site.city}</dd>
         </div>
       </dl>
       <ContactActions location="contact-page" />
     </div>
-    <MapPanel />
+    <div className="contact-media">
+      <JobPhoto name="storefront" />
+      <MapPanel />
+    </div>
   </section>;
 }
 
